@@ -18,6 +18,6 @@ export class LoginComponent {
   }
 
   main(){
-    this.router.navigate(['']);
+    this.router.navigate(['/incidents']);
   }
 }
