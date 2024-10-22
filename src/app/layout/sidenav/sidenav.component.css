@@ -1,0 +1,32 @@
+.body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  color: var(--md-sys-color-on-surface);
+}
+
+.container_logo{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  img{
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.container_options{
+  ul{
+    padding: 0;
+    list-style: none;
+    li{
+     a{
+       text-decoration: none;
+       color: var(--md-sys-color-on-surface);
+     }
+    }
+  }
+}
