@@ -23,11 +23,6 @@ import {Component, Input} from '@angular/core';
       height: 20px;
       padding: 10px 10px;
     }
-
-    label {
-
-    }
-
   `
 })
 export class TextFieldComponent {
