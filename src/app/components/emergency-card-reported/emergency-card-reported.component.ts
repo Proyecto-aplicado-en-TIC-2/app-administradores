@@ -9,39 +9,39 @@ import {FilledButtonComponent} from "../filled-button/filled-button.component";
   ],
   template: `
     <section>
-      <div class="box">
+      <div class="box roboto-regular">
         <div class="box_info">
-          <h4>Prioridad</h4>
+          <h5>Prioridad</h5>
           <p class="prioridad">Alta</p>
         </div>
 
         <div class="box_info">
-          <h4>Nombre completo</h4>
+          <h5>Nombre completo</h5>
           <p>Jaider Joham Morales Franco</p>
         </div>
 
         <div class="box_info">
-          <h4>Id UPB</h4>
+          <h5>Id UPB</h5>
           <p>000423552</p>
         </div>
 
         <div class="box_info">
-          <h4>Contacto de emergencia</h4>
+          <h5>Contacto de emergencia</h5>
           <p>3008059938</p>
         </div>
 
         <div class="box_info">
-          <h4>Bloque o punto de referencia</h4>
+          <h5>Bloque o punto de referencia</h5>
           <p>En la bibloteca</p>
         </div>
 
         <div class="box_info">
-          <h4>Salón</h4>
+          <h5>Salón</h5>
           <p>3</p>
         </div>
 
         <div class="box_info">
-          <h4>Descripción del incidente</h4>
+          <h5>Descripción del incidente</h5>
           <p>Tengo un corte en la mano</p>
         </div>
 
@@ -54,9 +54,9 @@ import {FilledButtonComponent} from "../filled-button/filled-button.component";
   `,
   styles: `
   section{
-    width: 320px;
+    width: 317px;
     background: var(--md-sys-color-primary-container);
-    padding: 10px;
+    padding: 20px 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -64,20 +64,36 @@ import {FilledButtonComponent} from "../filled-button/filled-button.component";
     box-shadow:  0 4px 4px 0 var(--md-sys-color-shadow);
   }
 
-  .box_info{
+
+  .box{
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
 
-    h4, p {
+    .prioridad{
+      font-size: 36px;
+    }
+    .box_info{
+      padding: 0 20px;
+    }
+    h5, p {
         margin: 0;
     }
+    p{
+      padding-top: 5px;
+    }
+  }
+
+  .box_button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
   }
 
   `
 })
 export class EmergencyCardReportedComponent {
-  @Input() json: String[] | undefined ;
-
+  //@Input() json: String[] | undefined ;
 
 }

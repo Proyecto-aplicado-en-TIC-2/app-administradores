@@ -1,19 +1,28 @@
 <div class="body">
   <h1 class="roboto-regular">Emergencias reportadas</h1>
-  <section>
-    <app-emergency-card-reported  json="{{ {data: 'hola', data2: 'hola'} }}
-    }}"/>
+  <section id="content-1">
+    <app-emergency-card-reported/>
+    <app-emergency-card-reported/>
+    <app-emergency-card-reported/>
   </section>
 
-  <h1 class="roboto-regular">Emergencias asignadas </h1>
-  <section></section>
+  <h1 class="roboto-regular">Emergencias asignadas</h1>
+  <section>
+    <app-table-assigned-emergencies/>
+  </section>
 
   <h1 class="roboto-regular">APHs en servicio</h1>
-  <section></section>
+  <section>
+    <app-table-aphs-service/>
+  </section>
 
   <h1 class="roboto-regular">Brigadistas disponibles</h1>
-  <section></section>
+  <section>
+    <app-table-available-brigade-members/>
+  </section>
 
   <h1 class="roboto-regular">Historial de emergencias</h1>
-  <section></section>
+  <section>
+    <app-table-emergency-history/>
+  </section>
 </div>
