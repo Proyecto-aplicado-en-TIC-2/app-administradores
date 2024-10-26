@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:app-administrador": "node dist/app-administrador/server/server.mjs",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "prettier ": "npx prettier --write ./src"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +44,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "^3.3.3",
     "typescript": "~5.5.2",
     "typescript-eslint": "8.10.0"
   }
