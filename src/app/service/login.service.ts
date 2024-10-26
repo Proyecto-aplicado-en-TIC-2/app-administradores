@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {environment} from "../../environments/environment";
-import {Observable, of} from "rxjs";
+import {of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -22,21 +22,15 @@ export class LoginService {
 
   public verifyToken() {
     try {
-      console.log("Verificar token");
-      console.log(this.auth.isAuthenticated())
-      if (this.auth.isAuthenticated()) {
-        return this.http.get<boolean>(environment.urlApi + '/hello', {
-          headers: {'Authorization': 'Bearer ' + this.auth.getToken()},
-        })
-      } else {
-        return of(false);
-      }
+      console.log("Login Service", "Verificar la valides del token");
+      return this.http.get<boolean>(environment.urlApi + '/hello', {
+        headers: {'Authorization': 'Bearer ' + this.auth.getToken()},
+      })
     } catch (e) {
-      console.log("error",e);
+      console.log("Login Service", "Servidor desconectado");
       return of(false);
     }
   }
-
 }
 
 interface ResponseLogIn {

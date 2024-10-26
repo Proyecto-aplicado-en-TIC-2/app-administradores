@@ -1,30 +1,31 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(@Inject(window) private window: Window) {
+  constructor(private cookieService: CookieService) {
   }
 
   // Méto do para verificar si el usuario está autenticado
   isAuthenticated(): boolean {
-    const token = this.window.sessionStorage.getItem('token'); // Verifica si hay un token almacenado
-    return !!token; // Retorna true si hay un token, false si no
+     // Verifica si hay un token almacenado
+    return this.cookieService.check('token');
   }
 
   getToken(){
-    return this.window.sessionStorage.getItem('token');
+    return this.cookieService.get('token');
   }
 
   // Méto do para guardar el token (llámalo después de iniciar sesión)
   saveToken(token: string): void {
-    this.window.sessionStorage.setItem('token', token);
+    this.cookieService.set('token', token, { expires: 1, path: '/' });
   }
 
   // Méto do para eliminar el token (útil para cerrar sesión)
   deleteToken(): void {
-    this.window.sessionStorage.removeItem('token');
+    this.cookieService.delete('token');
   }
 }

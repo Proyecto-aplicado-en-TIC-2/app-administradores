@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SidenavComponent} from "../layout/sidenav/sidenav.component";
-import {RouterOutlet} from "@angular/router";
+import {Router, RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-main',
@@ -12,6 +12,14 @@ import {RouterOutlet} from "@angular/router";
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
+
+  constructor(private router :Router) {
+  }
+
+  ngOnInit(): void {
+    console.log('MainComponent', 'Se inicio');
+    this.router.navigate(['incidents']).then();
+  }
 
 }

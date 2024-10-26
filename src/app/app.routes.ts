@@ -8,7 +8,6 @@ import {ReportComponent} from "./main/report/report.component";
 import {UsersComponent} from "./main/users/users.component";
 
 export const routes: Routes = [
-  {path: '', redirectTo: 'incidents', pathMatch: 'full' },
   {path: 'login', component: LoginComponent},
   {path: '', component: MainComponent,canActivate: [loginGuard], children: [
       {path: 'incidents', component: IncidentsComponent},

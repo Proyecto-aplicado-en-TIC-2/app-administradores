@@ -20,7 +20,12 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private authService : AuthService) {
+    private authService: AuthService) {
+    console.log('LoginComponent', 'Se inicio');
+
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/incidents']).then();
+    }
   }
 
   login() {
@@ -31,7 +36,7 @@ export class LoginComponent {
         console.log(date);
         if (date.operation) {
           this.authService.saveToken(date.access_token)
-          this.router.navigate(['']);
+          this.router.navigate(['/incidents']);
         } else {
           window.alert("Correo o contraseña incorrectos")
         }
@@ -39,9 +44,6 @@ export class LoginComponent {
       (error) => {
         console.log(error);
         window.alert("Sin conexión con el servidor")
-      },
-      () => {
-        console.log("completo");
       }
     )
   }
