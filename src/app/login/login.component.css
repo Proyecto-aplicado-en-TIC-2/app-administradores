@@ -12,7 +12,8 @@ app-login {
   background-color: var(--md-sys-color-surface);
 }
 
-.container, form {
+.container,
+form {
   display: flex;
   flex-direction: column;
   align-items: center;

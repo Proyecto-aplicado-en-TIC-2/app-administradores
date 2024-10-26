@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-text-field',
@@ -6,8 +6,10 @@ import {Component, Input} from '@angular/core';
   imports: [],
   template: `
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label roboto-regular">{{ label }}</label>
-      <input type="{{type}}" class="form-control" id="exampleInputEmail1">
+      <label for="exampleInputEmail1" class="form-label roboto-regular">{{
+        label
+      }}</label>
+      <input type="{{ type }}" class="form-control" id="exampleInputEmail1" />
     </div>
   `,
   styles: `
@@ -23,9 +25,9 @@ import {Component, Input} from '@angular/core';
       height: 20px;
       padding: 10px 10px;
     }
-  `
+  `,
 })
 export class TextFieldComponent {
-  @Input() label: string = "";
-  @Input() type: string = "";
+  @Input() label: string = '';
+  @Input() type: string = '';
 }

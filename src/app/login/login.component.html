@@ -1,15 +1,22 @@
 <div class="body">
   <div class="container">
-    <img src="/LogoUPB.png" alt="logo upb" height="200px" width="200px">
+    <img src="/LogoUPB.png" alt="logo upb" height="200px" width="200px" />
     <h1 class="roboto-medium">UPB Segura</h1>
-      <div class="inputs_box">
-        <label for="mail" class="form-label roboto-regular">Correo electrónico</label>
-        <input type="email" class="form-control" id="mail" [formControl]="mail">
-      </div>
-      <div class="inputs_box">
-        <label for="password" class="form-label roboto-regular">Contraseña</label>
-        <input type="password" class="form-control" id="password" [formControl]="password">
-      </div>
-      <app-filled-button texto="Iniciar sesión" (click)="login()"/>
+    <div class="inputs_box">
+      <label for="mail" class="form-label roboto-regular"
+        >Correo electrónico</label
+      >
+      <input type="email" class="form-control" id="mail" [formControl]="mail" />
+    </div>
+    <div class="inputs_box">
+      <label for="password" class="form-label roboto-regular">Contraseña</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        [formControl]="password"
+      />
+    </div>
+    <app-filled-button texto="Iniciar sesión" (click)="login()" />
   </div>
 </div>

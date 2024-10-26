@@ -1,33 +1,45 @@
 <div class="body">
   <div class="container_logo">
-    <img src="/logo_upb_small.png" alt="logo upb">
+    <img src="/logo_upb_small.png" alt="logo upb" />
     <h3 class="roboto-regular">UPB Segura</h3>
   </div>
   <div class="container_options">
-      <ul>
-        <li>
-          <a routerLink="/incidents" routerLinkActive="active" class="roboto-regular">
-            <h4>Incidencias</h4>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/global-alerts" routerLinkActive="active" class="roboto-regular">
-            <h4>Alertas globales</h4>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/reports" routerLinkActive="active" class="roboto-regular">
-            <h4>Informes</h4>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/users" routerLinkActive="active" class="roboto-regular">
-            <h4>Usuarios</h4>
-          </a>
-        </li>
-      </ul>
+    <ul>
+      <li>
+        <a
+          routerLink="/incidents"
+          routerLinkActive="active"
+          class="roboto-regular"
+        >
+          <h4>Incidencias</h4>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/global-alerts"
+          routerLinkActive="active"
+          class="roboto-regular"
+        >
+          <h4>Alertas globales</h4>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/reports"
+          routerLinkActive="active"
+          class="roboto-regular"
+        >
+          <h4>Informes</h4>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/users" routerLinkActive="active" class="roboto-regular">
+          <h4>Usuarios</h4>
+        </a>
+      </li>
+    </ul>
   </div>
   <div class="container_close_session">
-    <app-filled-button texto="Cerrar sesión" (click)="logOut()"/>
+    <app-filled-button texto="Cerrar sesión" (click)="logOut()" />
   </div>
 </div>

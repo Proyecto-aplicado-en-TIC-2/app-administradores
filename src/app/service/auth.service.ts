@@ -1,21 +1,19 @@
-import {Injectable} from '@angular/core';
-import {CookieService} from "ngx-cookie-service";
+import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  constructor(private cookieService: CookieService) {
-  }
+  constructor(private cookieService: CookieService) {}
 
   // Méto do para verificar si el usuario está autenticado
   isAuthenticated(): boolean {
-     // Verifica si hay un token almacenado
+    // Verifica si hay un token almacenado
     return this.cookieService.check('token');
   }
 
-  getToken(){
+  getToken() {
     return this.cookieService.get('token');
   }
 

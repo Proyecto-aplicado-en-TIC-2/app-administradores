@@ -1,61 +1,59 @@
-import {Component} from '@angular/core';
-import {FilledButtonComponent} from "../filled-button/filled-button.component";
+import { Component } from '@angular/core';
+import { FilledButtonComponent } from '../filled-button/filled-button.component';
 
 @Component({
   selector: 'app-table-assigned-emergencies',
   standalone: true,
-  imports: [
-    FilledButtonComponent
-  ],
+  imports: [FilledButtonComponent],
   template: `
     <table>
       <thead>
-      <tr class="roboto-regular">
-        <td><h3>Nombre Completo</h3></td>
-        <td><h3>Bloque</h3></td>
-        <td><h3>Descripción</h3></td>
-        <td><h3>Aph asignado</h3></td>
-      </tr>
+        <tr class="roboto-regular">
+          <td><h3>Nombre Completo</h3></td>
+          <td><h3>Bloque</h3></td>
+          <td><h3>Descripción</h3></td>
+          <td><h3>Aph asignado</h3></td>
+        </tr>
       </thead>
       <tbody class="roboto-regular">
-      <tr>
-        <td class="text">Jaider Joham Morales Franco</td>
-        <td class="text">Bloque 11</td>
-        <td class="text">Me realice un corte</td>
-        <td class="text">Maria perez</td>
-        <td>
-          <app-filled-button texto="Informe"/>
-        </td>
-        <td>
-          <app-filled-button texto="Asignar Brigadista"/>
-        </td>
-      </tr>
+        <tr>
+          <td class="text">Jaider Joham Morales Franco</td>
+          <td class="text">Bloque 11</td>
+          <td class="text">Me realice un corte</td>
+          <td class="text">Maria perez</td>
+          <td>
+            <app-filled-button texto="Informe" />
+          </td>
+          <td>
+            <app-filled-button texto="Asignar Brigadista" />
+          </td>
+        </tr>
 
-      <tr>
-        <td class="text">Jaider Joham Morales Franco</td>
-        <td class="text">Bloque 11</td>
-        <td class="text">Me realice un corte</td>
-        <td class="text">Maria perez</td>
-        <td>
-          <app-filled-button texto="Informe"/>
-        </td>
-        <td>
-          <app-filled-button texto="Asignar Brigadista"/>
-        </td>
-      </tr>
+        <tr>
+          <td class="text">Jaider Joham Morales Franco</td>
+          <td class="text">Bloque 11</td>
+          <td class="text">Me realice un corte</td>
+          <td class="text">Maria perez</td>
+          <td>
+            <app-filled-button texto="Informe" />
+          </td>
+          <td>
+            <app-filled-button texto="Asignar Brigadista" />
+          </td>
+        </tr>
 
-      <tr>
-        <td class="text">Jaider Joham Morales Franco</td>
-        <td class="text">Bloque 11</td>
-        <td class="text">djbfijdbfs</td>
-        <td class="text">Maria perez</td>
-        <td>
-          <app-filled-button texto="Informe"/>
-        </td>
-        <td>
-          <app-filled-button texto="Asignar Brigadista"/>
-        </td>
-      </tr>
+        <tr>
+          <td class="text">Jaider Joham Morales Franco</td>
+          <td class="text">Bloque 11</td>
+          <td class="text">djbfijdbfs</td>
+          <td class="text">Maria perez</td>
+          <td>
+            <app-filled-button texto="Informe" />
+          </td>
+          <td>
+            <app-filled-button texto="Asignar Brigadista" />
+          </td>
+        </tr>
       </tbody>
     </table>
   `,
@@ -83,8 +81,6 @@ import {FilledButtonComponent} from "../filled-button/filled-button.component";
         border-right: 1px solid var(--md-sys-color-on-surface);
       }
     }
-  `
+  `,
 })
-export class TableAssignedEmergenciesComponent {
-
-}
+export class TableAssignedEmergenciesComponent {}

@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import {FilledButtonComponent} from "../../components/filled-button/filled-button.component";
-import {TableOpenReportsComponent} from "../../components/table-open-reports/table-open-reports.component";
-import {
-  TableHistoryClosedReportsComponent
-} from "../../components/table-history-closed-reports/table-history-closed-reports.component";
+import { FilledButtonComponent } from '../../components/filled-button/filled-button.component';
+import { TableOpenReportsComponent } from '../../components/table-open-reports/table-open-reports.component';
+import { TableHistoryClosedReportsComponent } from '../../components/table-history-closed-reports/table-history-closed-reports.component';
 
 @Component({
   selector: 'app-report',
@@ -11,11 +9,9 @@ import {
   imports: [
     FilledButtonComponent,
     TableOpenReportsComponent,
-    TableHistoryClosedReportsComponent
+    TableHistoryClosedReportsComponent,
   ],
   templateUrl: './report.component.html',
-  styleUrl: './report.component.css'
+  styleUrl: './report.component.css',
 })
-export class ReportComponent {
-
-}
+export class ReportComponent {}
