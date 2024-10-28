@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FilledButtonComponent } from '../filled-button/filled-button.component';
 import { WebSocketService } from '../../service/web-socket.service';
-import { ListReportedEmergencies } from '../../service/data/datos';
-import {
-  IEmergencyReported,
-  ListReportedEmergenciesService,
-} from '../../service/data/reported-emergencies.service';
+import { IIncident, IncidentService } from '../../service/incident.service';
+import { CasesService } from '../../service/cases.service';
+import { ListIncidents } from '../../service/list/list-incidents';
 
 @Component({
   selector: 'app-emergency-card-reported',
@@ -13,7 +11,7 @@ import {
   imports: [FilledButtonComponent],
   template: `
     <div class="body">
-      @for (item of items; track item.id) {
+      @for (item of listTemp; track item.id) {
         <section>
           <div class="box roboto-regular">
             <div class="box_info">
@@ -113,24 +111,40 @@ import {
     }
   `,
 })
-export class EmergencyCardReportedComponent implements OnInit {
-  items: IEmergencyReported[] = [];
+export class EmergencyCardReportedComponent {
+  listTemp: IIncident[] = [];
 
   constructor(
     private webSocketService: WebSocketService,
-    private listReportedEmergenciesService: ListReportedEmergenciesService,
+    private incidentService: IncidentService,
+    private casesService: CasesService,
+    private listIncidents: ListIncidents,
   ) {
+    if (this.listIncidents.length() == 0) {
+      this.GetInicial();
+    } else {
+      console.log('🫡', 'Usando datos locales');
+      this.listTemp = this.listIncidents.get();
+    }
+
     this.webSocketService.outReportedEmergency.subscribe(() => {
-      this.items = listReportedEmergenciesService.getList();
-      console.log(
-        'Cantidad de alertas actuales -> Constructor',
-        this.items.length,
-      );
+      console.log('🫡', 'Dato entrante del socket', '📥', 'Reporte-Recibido');
+      console.log('🫡', 'Tamaño de la lista', this.listIncidents.length());
+      this.listTemp = this.listIncidents.get();
     });
   }
 
-  ngOnInit(): void {
-    this.items = this.listReportedEmergenciesService.getList();
-    console.log('Cantidad de alertas actuales -> ngOnInit', this.items.length);
+  GetInicial() {
+    console.log('🫡', 'GetInicial');
+    this.casesService.getNewReports().subscribe((casos) => {
+      const list: string[] = [];
+      casos.forEach((caso) => {
+        list.push(caso.id);
+      });
+      this.incidentService.getIncidentsOfTheDay(list).subscribe((reports) => {
+        this.listIncidents.fill(reports);
+        this.listTemp = this.listIncidents.get();
+      });
+    });
   }
 }
