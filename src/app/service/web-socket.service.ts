@@ -55,4 +55,9 @@ export class WebSocketService extends Socket {
   closeConnection(): void {
     this.ioSocket.close();
   }
+
+  // Asignar un aph
+  AssignAph(assignment: any): void {
+    this.ioSocket.emit('APH', assignment);
+  }
 }
