@@ -27,7 +27,7 @@ export class WebSocketService extends Socket {
       options: {
         transports: ['polling'],
         upgrade: true,
-        query: {
+        extraHeaders: {
           authorization: 'Bearer ' + authService.getToken(),
           name: 'App angular',
         },
