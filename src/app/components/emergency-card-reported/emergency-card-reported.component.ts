@@ -10,7 +10,7 @@ import {
 } from '../../service/community-upb.service';
 import { IAPH } from '../../interface/aph.interface';
 import { AphService } from '../../service/aph.service';
-import {it} from "node:test";
+import { it } from 'node:test';
 
 @Component({
   selector: 'app-emergency-card-reported',
@@ -19,7 +19,7 @@ import {it} from "node:test";
   template: `
     <div class="body">
       @for (item of listTemp; track item.id) {
-        <section>
+        <section class="section_1">
           <div class="box roboto-regular">
             <div class="box_info">
               <h5>Prioridad</h5>
@@ -55,7 +55,9 @@ import {it} from "node:test";
           </div>
         </section>
       } @empty {
-        <h2 class="roboto-regular" style="color: var(--md-sys-color-error)">Sin alertas reportadas</h2>
+        <h2 class="roboto-regular" style="color: var(--md-sys-color-error)">
+          Sin alertas reportadas
+        </h2>
       }
     </div>
     @if (isIncidentModalOpen) {
@@ -153,7 +155,10 @@ import {it} from "node:test";
                       </td>
                       <td>
                         <div class="buttons">
-                          <app-filled-button texto="Asignar APH" (click)="AssignAph(item)" />
+                          <app-filled-button
+                            texto="Asignar APH"
+                            (click)="AssignAph(item)"
+                          />
                         </div>
                       </td>
                     </tr>
@@ -175,10 +180,12 @@ import {it} from "node:test";
     .body {
       display: flex;
       flex-direction: row;
+      padding: 20px;
       gap: 30px;
+      width: max-content;
     }
 
-    section {
+    .section_1 {
       width: 317px;
       background: var(--md-sys-color-primary-container);
       padding: 20px 10px;
@@ -374,12 +381,12 @@ export class EmergencyCardReportedComponent {
   }
 
   isAssignAphModalOpen = false;
-  incidenciaId = "";
-  partition_keyModalOpen = "";
+  incidenciaId = '';
+  partition_keyModalOpen = '';
   items: IAPH[] = [];
   openModalAssignAph(incident: IIncident) {
-    this.incidenciaId = incident.id // Id del caso abierto (Incidente)
-    this.partition_keyModalOpen = incident.partition_key // Tipo de caso - Medico - Incendio
+    this.incidenciaId = incident.id; // Id del caso abierto (Incidente)
+    this.partition_keyModalOpen = incident.partition_key; // Tipo de caso - Medico - Incendio
 
     // Consulta de APH
     this.aphService.getAllAph().subscribe((data) => {
@@ -395,13 +402,13 @@ export class EmergencyCardReportedComponent {
   AssignAph(aph: IAPH) {
     // Objeto para la asignación
     let assignAph = {
-      user_id: aph.id ,
+      user_id: aph.id,
       partition_key: this.partition_keyModalOpen,
-      case_id: this.incidenciaId ,
-    }
-    console.log('😉','Datos de la asignación',assignAph);
-    console.log('😉','Nombre del APH',aph.names, aph.last_names);
-    console.log('😉','ID del aph',aph.id);
+      case_id: this.incidenciaId,
+    };
+    console.log('😉', 'Datos de la asignación', assignAph);
+    console.log('😉', 'Nombre del APH', aph.names, aph.last_names);
+    console.log('😉', 'ID del aph', aph.id);
 
     // Realizar la asignación
     this.webSocketService.AssignAph(assignAph);
@@ -411,8 +418,10 @@ export class EmergencyCardReportedComponent {
 
     // Eliminar de la lista
     // Obtener la lista
-    let listaConCambios = this.listIncidents.get().filter((item) => item.id !== this.incidenciaId)
-    this.listIncidents.fill(listaConCambios)
+    let listaConCambios = this.listIncidents
+      .get()
+      .filter((item) => item.id !== this.incidenciaId);
+    this.listIncidents.fill(listaConCambios);
 
     this.listTemp = this.listIncidents.get();
   }

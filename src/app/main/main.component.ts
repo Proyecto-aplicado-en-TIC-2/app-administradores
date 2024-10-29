@@ -21,6 +21,5 @@ export class MainComponent implements OnInit {
     this.router.navigate(['incidents']).then();
 
     this.webSocketService.connect();
-    this.webSocketService.mensajes();
   }
 }
