@@ -333,6 +333,7 @@ export class EmergencyCardReportedComponent {
   isIncidentModalOpen = false;
   incidentModal: IIncident = {
     partition_key: '',
+    priority: '',
     reporter: {
       id: '',
       names: '',
