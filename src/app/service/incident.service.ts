@@ -41,6 +41,7 @@ export class IncidentService {
 
 export interface IIncident {
   partition_key: string;
+  priority: string;
   reporter: {
     id: string;
     names: string;
