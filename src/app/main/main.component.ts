@@ -21,6 +21,8 @@ export class MainComponent implements OnInit {
     this.router.navigate(['incidents']).then();
 
     //inicializar la escucha
+    this.webSocketService.connect();
+    this.webSocketService.listen();
     this.webSocketService.mensajes();
   }
 }
