@@ -1,3 +1,3 @@
 export const environment = {
-  urlApi: 'undefined',
+  urlApi: 'https://gdr-container-testing.livelybay-5b00af3d.centralus.azurecontainerapps.io',
 };

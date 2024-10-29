@@ -3,6 +3,7 @@ import { Socket } from 'ngx-socket-io';
 import { AuthService } from './auth.service';
 import { ListIncidents } from './list/list-incidents';
 import { IIncident } from './incident.service';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class WebSocketService extends Socket {
     );
 
     super({
-      url: 'http://localhost:3000/WebSocketGateway',
+      url: environment.urlApi + '/WebSocketGateway',
       options: {
         transports: ['websocket'],
         upgrade: true,
