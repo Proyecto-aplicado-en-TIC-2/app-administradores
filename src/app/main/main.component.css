@@ -7,11 +7,11 @@
   background: var(--md-sys-color-surface);
 }
 
-.sidenav{
+.sidenav {
   width: 250px;
   margin: 15px 0 15px 15px;
 }
-.container{
+.container {
   width: calc(100% - 265px);
   background: var(--md-sys-color-on-primary);
   margin: 15px 15px 15px 20px;

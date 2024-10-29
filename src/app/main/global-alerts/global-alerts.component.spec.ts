@@ -8,9 +8,8 @@ describe('GlobalAlertsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GlobalAlertsComponent]
-    })
-    .compileComponents();
+      imports: [GlobalAlertsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GlobalAlertsComponent);
     component = fixture.componentInstance;

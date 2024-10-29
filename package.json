@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:app-administrador": "node dist/app-administrador/server/server.mjs"
+    "serve:ssr:app-administrador": "node dist/app-administrador/server/server.mjs",
+    "lint": "ng lint",
+    "prettier ": "npx prettier --write ./src"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +24,8 @@
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.5",
     "express": "^4.18.2",
+    "ngx-cookie-service": "^18.0.0",
+    "ngx-socket-io": "^4.7.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
@@ -33,12 +37,16 @@
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "angular-eslint": "18.4.0",
+    "eslint": "^9.13.0",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.5.2"
+    "prettier": "^3.3.3",
+    "typescript": "~5.5.2",
+    "typescript-eslint": "8.10.0"
   }
 }
