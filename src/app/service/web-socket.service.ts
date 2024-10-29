@@ -28,8 +28,7 @@ export class WebSocketService extends Socket {
         transports: ['polling'],
         upgrade: true,
         extraHeaders: {
-          authorization: 'Bearer ' + authService.getToken(),
-          name: 'App angular',
+          Authorization: 'Bearer ' + authService.getToken(),
         },
       },
     });
