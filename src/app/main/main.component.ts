@@ -19,5 +19,8 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     console.log('MainComponent', 'Se inicio');
     this.router.navigate(['incidents']).then();
+
+    this.webSocketService.connect();
+    this.webSocketService.mensajes();
   }
 }

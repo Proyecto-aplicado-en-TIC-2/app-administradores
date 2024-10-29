@@ -25,18 +25,16 @@ export class WebSocketService extends Socket {
     super({
       url: environment.urlApi + '/WebSocketGateway',
       options: {
-        transports: ['websocket'],
+        transports: ['polling'],
         upgrade: true,
-        extraHeaders: {
+        query: {
           authorization: 'Bearer ' + authService.getToken(),
           name: 'App angular',
         },
       },
     });
 
-    this.ioSocket.connect()
     this.listen()
-    this.mensajes()
   }
 
   listen = (): void => {
