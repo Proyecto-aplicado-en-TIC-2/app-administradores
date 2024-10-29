@@ -33,7 +33,15 @@ export class WebSocketService extends Socket {
         },
       },
     });
+
+    this.listen()
   }
+
+  listen = (): void => {
+    this.ioSocket.on('connect', (res: any) => {
+      console.log('Escuchando el webSocket', res);
+    });
+  };
 
   mensajes = () => {
     this.ioSocket.on('Reporte_Resivido', (res: IIncident) => {
