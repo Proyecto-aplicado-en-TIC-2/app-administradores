@@ -33,6 +33,10 @@ export class WebSocketService extends Socket {
         },
       },
     });
+
+    this.ioSocket.connect()
+    this.listen()
+    this.mensajes()
   }
 
   listen = (): void => {
