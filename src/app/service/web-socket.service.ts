@@ -35,6 +35,7 @@ export class WebSocketService extends Socket {
     });
 
     this.listen()
+    this.mensajes()
   }
 
   listen = (): void => {
