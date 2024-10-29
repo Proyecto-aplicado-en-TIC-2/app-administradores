@@ -68,4 +68,9 @@ export class WebSocketService extends Socket {
   AssignAph(assignment: any): void {
     this.ioSocket.emit('APH', assignment);
   }
+
+  // Alerta global
+  GlobalAlerts(assignment: any): void {
+    this.ioSocket.emit('GlovalWarning', assignment);
+  }
 }

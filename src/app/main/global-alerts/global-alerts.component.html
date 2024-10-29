@@ -1,14 +1,35 @@
 <div class="body">
-  <h1 class="roboto-regular">Alertas global activada</h1>
+  <!--  <h1 class="roboto-regular">Alertas global activada</h1>
   <section class="container_1">
     <app-card-global-emergency-active />
-  </section>
+  </section>-->
 
   <h1 class="roboto-regular">Lista de alertas globales</h1>
-  <app-filled-button texto="Crear alerta global" />
+  <!--  <app-filled-button texto="Crear alerta global" />-->
   <section class="container_2">
-    <app-card-global-emergency />
-    <app-card-global-emergency />
-    <app-card-global-emergency />
+    <app-card-global-emergency
+      NombreAlerta="Incendio"
+      Description="Alerta sobre la presencia de fuego en el campus, con rutas de evacuación recomendadas."
+    />
+    <app-card-global-emergency
+      NombreAlerta="Sismo"
+      Description="Notificación de movimientos sísmicos, con instrucciones para resguardarse."
+    />
+    <app-card-global-emergency
+      NombreAlerta="Evacuación General"
+      Description="Instrucción para evacuar el campus por riesgos como inundación o peligros químicos."
+    />
+    <app-card-global-emergency
+      NombreAlerta="Cierre de Campus"
+      Description="Cierre total del campus debido a emergencias o situaciones de seguridad."
+    />
+    <app-card-global-emergency
+      NombreAlerta="Alerta Sanitaria"
+      Description="Alerta sobre brotes de enfermedades o riesgos sanitarios en el campus."
+    />
+    <app-card-global-emergency
+      NombreAlerta="Simulacro"
+      Description="Práctica de respuesta a emergencias para que estudiantes y personal estén preparados."
+    />
   </section>
 </div>
