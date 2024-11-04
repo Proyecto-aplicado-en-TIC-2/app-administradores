@@ -2,7 +2,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { AuthService } from './auth.service';
 import { ListIncidents } from './list/list-incidents';
-import { IIncident } from './incident.service';
+import { IIncident } from './reports.service';
 import { environment } from '../../environments/environment';
 
 @Injectable({

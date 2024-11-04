@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FilledButtonComponent } from '../filled-button/filled-button.component';
 import { WebSocketService } from '../../service/web-socket.service';
-import { IIncident, IncidentService } from '../../service/incident.service';
+import { IIncident, ReportsService } from '../../service/reports.service';
 import { CasesService } from '../../service/cases.service';
 import { ListIncidents } from '../../service/list/list-incidents';
 import {
@@ -303,7 +303,7 @@ export class EmergencyCardReportedComponent {
 
   constructor(
     private webSocketService: WebSocketService,
-    private incidentService: IncidentService,
+    private incidentService: ReportsService,
     private casesService: CasesService,
     private listIncidents: ListIncidents,
     private communityUpbService: CommunityUpbService,

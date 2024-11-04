@@ -12,7 +12,7 @@
   margin: 15px 0 15px 15px;
 }
 .container {
-  width: calc(100% - 265px);
+  width: calc(100% - 310px);
   background: var(--md-sys-color-on-primary);
   margin: 15px 15px 15px 20px;
   border-radius: 15px;

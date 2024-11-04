@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FilledButtonComponent } from '../filled-button/filled-button.component';
+import {CasesService} from "../../service/cases.service";
+import {CaseModel} from "../../models/case";
+import {ReportsService} from "../../service/reports.service";
+import {ReportModel} from "../../models/report";
 
 @Component({
   selector: 'app-table-open-reports',
@@ -16,53 +20,16 @@ import { FilledButtonComponent } from '../filled-button/filled-button.component'
         </tr>
       </thead>
       <tbody class="roboto-regular">
+        @for (item of Data; track item.id) {
         <tr>
-          <td class="text">Jaider Joham Morales Franco</td>
-          <td class="text">Bloque 11</td>
-          <td class="text">Me realice un corte</td>
-          <td class="text">Maria perez</td>
-          <td>
-            <app-filled-button texto="Eliminar" />
-          </td>
-          <td>
-            <app-filled-button texto="Actualizar" />
-          </td>
-          <td>
-            <app-filled-button texto="Ver" />
+          <td class="text">
+            <p>{{ item. }}</p>
           </td>
         </tr>
+        } @empty {
+          <p>Cargando datos</p>
+        }
 
-        <tr>
-          <td class="text">Jaider Joham Morales Franco</td>
-          <td class="text">Bloque 11</td>
-          <td class="text">Me realice un corte</td>
-          <td class="text">Maria perez</td>
-          <td>
-            <app-filled-button texto="Eliminar" />
-          </td>
-          <td>
-            <app-filled-button texto="Actualizar" />
-          </td>
-          <td>
-            <app-filled-button texto="Ver" />
-          </td>
-        </tr>
-
-        <tr>
-          <td class="text">Jaider Joham Morales Franco</td>
-          <td class="text">Bloque 11</td>
-          <td class="text">Me realice un corte</td>
-          <td class="text">Maria perez</td>
-          <td>
-            <app-filled-button texto="Eliminar" />
-          </td>
-          <td>
-            <app-filled-button texto="Actualizar" />
-          </td>
-          <td>
-            <app-filled-button texto="Ver" />
-          </td>
-        </tr>
       </tbody>
     </table>
   `,
@@ -92,4 +59,30 @@ import { FilledButtonComponent } from '../filled-button/filled-button.component'
     }
   `,
 })
-export class TableOpenReportsComponent {}
+export class TableOpenReportsComponent implements OnInit {
+  // lista temporal
+  Reportes: ReportModel[] = [];
+  Casos: CaseModel[] = [];
+
+  constructor(private casesService: CasesService, private reportsService : ReportsService) {
+  }
+
+  ngOnInit(): void {
+
+    // Consultamos los casos abiertos con un APH
+    this.casesService.getOpenCases().subscribe((data) => {
+      this.Casos = data;
+    });
+
+    // lista de ids
+    const idsCasos: string[] = this.Casos.map((value) => value.id).filter(value => value != undefined);
+
+    // Consultamos los reportes
+    this.reportsService.GetFromList(idsCasos).subscribe(value => {
+      this.Reportes = value
+    })
+
+    // Consultamos los reportes completos
+  }
+
+}
