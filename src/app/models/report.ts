@@ -1,20 +1,24 @@
 export class ReportModel {
-  //Id Auto generate for CosmosDB
-  public partition_key: Cases;
-  public priority?: Priorty
-  public whatIsHappening?: string;
-  public affected?: string;
-  public reporter?: {
-    id?: string;
-    names?: string;
-    lastNames?: string;
-    relationshipWithTheUniversity?: RelationshipWithTheUniversity;
-  };
-  public location?: {
-    block?: Block;
-    classroom?: string;
-    pointOfReference?: string;
-  };
+  public id: string = '';
+  public partition_key: Cases = 0;
+  public priority: Priorty = 0;
+  public whatIsHappening: string = '';
+  public affected: string = '';
+  public reporter = new Reporter();
+  public location = new Location();
+}
+
+class Location {
+  public block: Block = 0;
+  public classroom: string = '';
+  public pointOfReference: string = '';
+}
+
+class Reporter {
+  public id: string = '';
+  public names: string = '';
+  public lastNames: string = '';
+  public relationshipWithTheUniversity: RelationshipWithTheUniversity = 0;
 }
 
 export enum RelationshipWithTheUniversity {
@@ -30,10 +34,10 @@ export enum Cases {
   Estrctural,
 }
 
-export enum Priorty{
+export enum Priorty {
   Alta,
   Media,
-  Baja
+  Baja,
 }
 
 export enum Block {

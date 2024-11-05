@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
 import { FilledButtonComponent } from '../filled-button/filled-button.component';
 import { WebSocketService } from '../../service/web-socket.service';
-import { IIncident, ReportsService } from '../../service/reports.service';
+import { ReportsService } from '../../service/reports.service';
 import { CasesService } from '../../service/cases.service';
-import { ListIncidents } from '../../service/list/list-incidents';
-import {
-  CommunityUpbService,
-  ICommunityUpb,
-} from '../../service/community-upb.service';
+import { ListReports } from '../../service/list/list-reports.service';
+import { CommunityUpbService } from '../../service/community-upb.service';
 import { IAPH } from '../../interface/aph.interface';
 import { AphService } from '../../service/aph.service';
-import { it } from 'node:test';
+import { ReportModel } from '../../models/report';
+import { CommunityModel } from '../../models/community';
+import {Cases} from "../../models/case";
 
 @Component({
   selector: 'app-emergency-card-reported',
@@ -21,15 +20,33 @@ import { it } from 'node:test';
       @for (item of listTemp; track item.id) {
         <section class="section_1">
           <div class="box roboto-regular">
-            <div class="box_info">
-              <h5>Prioridad</h5>
-              <p class="prioridad">Alta</p>
+            <div class="header">
+              <div class="box_info">
+                <h5>Prioridad</h5>
+                <p class="prioridad">{{item.priority}}</p>
+              </div>
+              <div class="box_info">
+                <h5>Categoría</h5>
+                <p class="prioridad">{{item.partition_key}}</p>
+              </div>
             </div>
 
             <div class="box_info">
               <h5>Nombre completo</h5>
               <p>{{ item.reporter.names + ' ' + item.reporter.lastNames }}</p>
             </div>
+
+            <div class="box_info">
+              <h5>Relación con la universidad</h5>
+              <p>{{ item.reporter.relationshipWithTheUniversity }}</p>
+            </div>
+
+            <div class="box_info">
+              <h5>Que esta pasando</h5>
+              <p>{{ item.whatIsHappening }}</p>
+            </div>
+
+            <h4>Locación del reporte</h4>
 
             <div class="box_info">
               <h5>Bloque</h5>
@@ -51,7 +68,7 @@ import { it } from 'node:test';
               texto="Asignar APH"
               (click)="openModalAssignAph(item)"
             />
-            <app-filled-button texto="Mas" (click)="openModal(item)" />
+            <app-filled-button texto="Mas" (click)="openModal(item)"/>
           </div>
         </section>
       } @empty {
@@ -65,29 +82,47 @@ import { it } from 'node:test';
         <div class="modal-content">
           <div class="container">
             <div class="box roboto-regular">
-              <h2>Categoría del caso</h2>
+              <h2>Prioridad</h2>
               <div class="box_info">
-                <p class="prioridad">{{ incidentModal.partition_key }}</p>
+                <p class="prioridad">{{ reportModal.priority }}</p>
               </div>
 
-              <h2>Locación de la incidencia</h2>
+              <h2>Categoría</h2>
+              <div class="box_info">
+                <p class="category">{{ reportModal.partition_key }}</p>
+              </div>
+
+              <h3>Detalles del reporte</h3>
+
+              <div class="box_info">
+                <h5>Que está sucediendo</h5>
+                <p>{{ reportModal.whatIsHappening }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Afectado</h5>
+                <p>{{ reportModal.affected }}</p>
+              </div>
+
+            </div>
+            <div class="box roboto-regular">
+              <h2>Locación</h2>
 
               <div class="box_info">
                 <h5>Bloque</h5>
-                <p>{{ incidentModal.location.block }}</p>
+                <p>{{ reportModal.location.block }}</p>
               </div>
 
               <div class="box_info">
                 <h5>Salon</h5>
-                <p>{{ incidentModal.location.classroom }}</p>
+                <p>{{ reportModal.location.classroom }}</p>
               </div>
 
               <div class="box_info">
                 <h5>Punto de referencia</h5>
-                <p>{{ incidentModal.location.pointOfReference }}</p>
+                <p>{{ reportModal.location.pointOfReference }}</p>
               </div>
-            </div>
-            <div class="box roboto-regular">
+
               <h2>Quien reporta</h2>
               <div class="box_info">
                 <h5>Nombres</h5>
@@ -112,14 +147,79 @@ import { it } from 'node:test';
               <div class="box_info">
                 <h5>Relación con la universidad</h5>
                 <p>
-                  {{ communityUpbModal.relationship_with_the_university }}
+                  {{ communityUpbModal.relationshipWithTheUniversity }}
+                </p>
+              </div>
+            </div>
+
+            <div class="box roboto-regular">
+              <h2>Detalles</h2>
+              <div class="box_info">
+                <h5>Id Universitario</h5>
+                <p>{{ communityUpbModal.userDetails.idUniversity }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Tipo de documento</h5>
+                <p>{{ communityUpbModal.userDetails.documetnType }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Numero de documento</h5>
+                <p>{{ communityUpbModal.userDetails.documentNumber }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Dirección</h5>
+                <p>{{ communityUpbModal.userDetails.address }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Contacto de emergencia</h5>
+                <p>
+                  {{ communityUpbModal.userDetails.emergencyContactPhoneNumber }}
+                </p>
+              </div>
+
+              <div class="box_info">
+                <h5>Fecha de nacimiento</h5>
+                <p>
+                  {{ communityUpbModal.userDetails.birthday }}
+                </p>
+              </div>
+
+              <div class="box_info">
+                <h5>Tipo de sangre</h5>
+                <p>
+                  {{ communityUpbModal.userDetails.bloodType }}
+                </p>
+              </div>
+
+              <div class="box_info">
+                <h5>Alergias</h5>
+                <p>
+                  {{ communityUpbModal.userDetails.allergies }}
+                </p>
+              </div>
+
+              <div class="box_info">
+                <h5>Medicamentos dependientes</h5>
+                <p>
+                  {{ communityUpbModal.userDetails.dependentMedications }}
+                </p>
+              </div>
+
+              <div class="box_info">
+                <h5>Discapacidad</h5>
+                <p>
+                  {{ communityUpbModal.userDetails.disabilities }}
                 </p>
               </div>
             </div>
             <div></div>
           </div>
           <div class="buttons_footer">
-            <app-filled-button texto="Cerrar" (click)="closeModal()" />
+            <app-filled-button texto="Cerrar" (click)="closeModal()"/>
           </div>
         </div>
       </div>
@@ -131,12 +231,12 @@ import { it } from 'node:test';
             <div class="box roboto-regular">
               <table>
                 <thead>
-                  <tr class="roboto-regular">
-                    <td><h4>Nombres</h4></td>
-                    <td><h4>Apellidos</h4></td>
-                    <td><h4>Numero de teléfono</h4></td>
-                    <td><h4>Cuadrante</h4></td>
-                  </tr>
+                <tr class="roboto-regular">
+                  <td><h4>Nombres</h4></td>
+                  <td><h4>Apellidos</h4></td>
+                  <td><h4>Numero de teléfono</h4></td>
+                  <td><h4>Cuadrante</h4></td>
+                </tr>
                 </thead>
                 <tbody class="roboto-regular">
                   @for (item of items; track item.id) {
@@ -170,7 +270,7 @@ import { it } from 'node:test';
             </div>
           </div>
           <div class="buttons_footer">
-            <app-filled-button texto="Cerrar" (click)="closeModalAssignAph()" />
+            <app-filled-button texto="Cerrar" (click)="closeModalAssignAph()"/>
           </div>
         </div>
       </div>
@@ -195,6 +295,17 @@ import { it } from 'node:test';
       gap: 10px;
       border-radius: 8px;
       box-shadow: 0 4px 4px 0 var(--md-sys-color-shadow);
+
+      .header{
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      h4{
+        margin: 0;
+        padding-left: 10px;
+      }
     }
 
     .box {
@@ -206,7 +317,7 @@ import { it } from 'node:test';
         font-size: 36px;
       }
       .box_info {
-        padding: 0 20px;
+        padding: 0 10px;
       }
       h5,
       h2,
@@ -239,6 +350,7 @@ import { it } from 'node:test';
     }
 
     .modal-content {
+      max-width: 60%;
       background: white;
       padding: 30px;
       border-radius: 8px;
@@ -247,6 +359,11 @@ import { it } from 'node:test';
       .prioridad {
         color: var(--md-sys-color-primary);
       }
+      .category{
+        font-size: 26px;
+        color: var(--md-sys-color-primary);
+      }
+
     }
 
     .buttons_footer {
@@ -256,12 +373,16 @@ import { it } from 'node:test';
     }
 
     .container {
-      display: flex;
-      flex-direction: row;
-      gap: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 30px;
+      color: var(--md-sys-color-on-surface);
     }
 
     .container_2 {
+      display: flex;
+      flex-direction: column;
+      color: var(--md-sys-color-on-surface);
       div {
         overflow-x: auto;
         color: var(--md-sys-color-on-surface);
@@ -299,13 +420,13 @@ import { it } from 'node:test';
   `,
 })
 export class EmergencyCardReportedComponent {
-  listTemp: IIncident[] = [];
+  listTemp: ReportModel[] = [];
 
   constructor(
     private webSocketService: WebSocketService,
     private incidentService: ReportsService,
     private casesService: CasesService,
-    private listIncidents: ListIncidents,
+    private listIncidents: ListReports,
     private communityUpbService: CommunityUpbService,
     private aphService: AphService,
   ) {
@@ -330,7 +451,7 @@ export class EmergencyCardReportedComponent {
       casos.forEach((caso) => {
         list.push(caso.id);
       });
-      this.incidentService.getIncidentsOfTheDay(list).subscribe((reports) => {
+      this.incidentService.GetFromList(list).subscribe((reports) => {
         this.listIncidents.fill(reports);
         this.listTemp = this.listIncidents.get();
       });
@@ -338,38 +459,14 @@ export class EmergencyCardReportedComponent {
   }
 
   isIncidentModalOpen = false;
-  incidentModal: IIncident = {
-    partition_key: '',
-    priority: '',
-    reporter: {
-      id: '',
-      names: '',
-      lastNames: '',
-      relationshipWithTheUniversity: '',
-    },
-    location: {
-      block: '',
-      classroom: 0,
-      pointOfReference: '',
-    },
-    id: '',
-  };
+  reportModal: ReportModel = new ReportModel();
+  communityUpbModal: CommunityModel = new CommunityModel();
 
-  communityUpbModal: ICommunityUpb = {
-    partition_key: '',
-    id: '',
-    names: '',
-    last_names: '',
-    mail: '',
-    phone_number: '',
-    relationship_with_the_university: '',
-  };
-
-  openModal(incident: IIncident) {
-    this.incidentModal = incident;
+  openModal(report: ReportModel) {
+    this.reportModal = report;
     // consultamos el usuario
     this.communityUpbService
-      .getById(incident.reporter.id)
+      .getById(report.reporter.id)
       .subscribe((casos) => {
         this.communityUpbModal = casos;
         this.isIncidentModalOpen = true;
@@ -382,11 +479,11 @@ export class EmergencyCardReportedComponent {
 
   isAssignAphModalOpen = false;
   incidenciaId = '';
-  partition_keyModalOpen = '';
+  partition_keyModalOpen: Cases = 0;
   items: IAPH[] = [];
-  openModalAssignAph(incident: IIncident) {
-    this.incidenciaId = incident.id; // Id del caso abierto (Incidente)
-    this.partition_keyModalOpen = incident.partition_key; // Tipo de caso - Medico - Incendio
+  openModalAssignAph(report: ReportModel) {
+    this.incidenciaId = report.id; // Id del caso abierto (Incidente)
+    this.partition_keyModalOpen = report.partition_key; // Tipo de caso - Medico - Incendio
 
     // Consulta de APH
     this.aphService.getAllAph().subscribe((data) => {

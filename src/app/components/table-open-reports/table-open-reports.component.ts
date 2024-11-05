@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FilledButtonComponent } from '../filled-button/filled-button.component';
-import {CasesService} from "../../service/cases.service";
-import {CaseModel} from "../../models/case";
-import {ReportsService} from "../../service/reports.service";
-import {ReportModel} from "../../models/report";
+import { CasesService } from '../../service/cases.service';
+import { CaseModel } from '../../models/case';
+import { ReportsService } from '../../service/reports.service';
+import { ReportModel } from '../../models/report';
 
 @Component({
   selector: 'app-table-open-reports',
@@ -20,16 +20,15 @@ import {ReportModel} from "../../models/report";
         </tr>
       </thead>
       <tbody class="roboto-regular">
-        @for (item of Data; track item.id) {
-        <tr>
-          <td class="text">
-            <p>{{ item. }}</p>
-          </td>
-        </tr>
+        @for (item of Reportes; track item.id) {
+          <tr>
+            <td class="text">
+              <p>{{ item.id }}</p>
+            </td>
+          </tr>
         } @empty {
           <p>Cargando datos</p>
         }
-
       </tbody>
     </table>
   `,
@@ -64,25 +63,27 @@ export class TableOpenReportsComponent implements OnInit {
   Reportes: ReportModel[] = [];
   Casos: CaseModel[] = [];
 
-  constructor(private casesService: CasesService, private reportsService : ReportsService) {
-  }
+  constructor(
+    private casesService: CasesService,
+    private reportsService: ReportsService,
+  ) {}
 
   ngOnInit(): void {
-
     // Consultamos los casos abiertos con un APH
     this.casesService.getOpenCases().subscribe((data) => {
       this.Casos = data;
     });
 
     // lista de ids
-    const idsCasos: string[] = this.Casos.map((value) => value.id).filter(value => value != undefined);
+    const idsCasos: string[] = this.Casos.map((value) => value.id).filter(
+      (value) => value != undefined,
+    );
 
     // Consultamos los reportes
-    this.reportsService.GetFromList(idsCasos).subscribe(value => {
-      this.Reportes = value
-    })
+    this.reportsService.GetFromList(idsCasos).subscribe((value) => {
+      this.Reportes = value;
+    });
 
     // Consultamos los reportes completos
   }
-
 }

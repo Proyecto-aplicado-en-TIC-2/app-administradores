@@ -1,9 +1,9 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { AuthService } from './auth.service';
-import { ListIncidents } from './list/list-incidents';
-import { IIncident } from './reports.service';
+import { ListReports } from './list/list-reports.service';
 import { environment } from '../../environments/environment';
+import {ReportModel} from "../models/report";
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class WebSocketService extends Socket {
 
   constructor(
     private authService: AuthService,
-    private listIncidents: ListIncidents,
+    private listIncidents: ListReports,
   ) {
     console.log(
       '📡',
@@ -43,7 +43,7 @@ export class WebSocketService extends Socket {
   };
 
   mensajes = () => {
-    this.ioSocket.on('Reporte_Resivido', (res: IIncident) => {
+    this.ioSocket.on('Reporte_Resivido', (res: ReportModel) => {
       console.log(
         '📡',
         'Mensaje recibido',

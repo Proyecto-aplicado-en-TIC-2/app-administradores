@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import {ReportModel} from "../models/report";
+import { ReportModel } from '../models/report';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +31,7 @@ export class ReportsService {
 
   public GetFromList(ids: string[]): Observable<ReportModel[]> {
     return this.http.post<ReportModel[]>(
-      environment.urlApi + `/incidents/GetIncidentsOfTheDay`,
+      environment.urlApi + `/incidents/IncidentsFromList`,
       ids,
       {
         headers: { Authorization: 'Bearer ' + this.auth.getToken() },
