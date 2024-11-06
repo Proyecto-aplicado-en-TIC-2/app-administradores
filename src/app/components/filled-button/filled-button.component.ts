@@ -4,7 +4,9 @@ import { Component, Input } from '@angular/core';
   selector: 'app-filled-button',
   standalone: true,
   imports: [],
-  template: ` <button class="roboto-regular">{{ texto }}</button> `,
+  template: `
+    <button class="roboto-regular" [disabled]="disabled">{{ texto }}</button>
+  `,
   styles: `
     button {
       background-color: var(--md-sys-color-primary);
@@ -14,8 +16,15 @@ import { Component, Input } from '@angular/core';
       border-radius: 50px;
       font-size: 15px;
     }
+
+    button:disabled {
+      background-color: rgba(29, 27, 32, 0.12);
+      opacity: 0.7;
+      color: var(--md-sys-color-on-surface);
+    }
   `,
 })
 export class FilledButtonComponent {
   @Input() texto: string = '';
+  @Input() disabled!: boolean;
 }

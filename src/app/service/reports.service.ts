@@ -3,24 +3,25 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { ReportModel } from '../models/report';
 
 @Injectable({
   providedIn: 'root',
 })
-export class IncidentService {
+export class ReportsService {
   constructor(
     private http: HttpClient,
     private auth: AuthService,
   ) {}
 
   public getAll() {
-    return this.http.get<IIncident[]>(environment.urlApi + '/incidents', {
+    return this.http.get<ReportModel[]>(environment.urlApi + '/incidents', {
       headers: { Authorization: 'Bearer ' + this.auth.getToken() },
     });
   }
 
-  public getById(id: string, partitionKey: string): Observable<IIncident> {
-    return this.http.get<IIncident>(
+  public getById(id: string, partitionKey: string): Observable<ReportModel> {
+    return this.http.get<ReportModel>(
       environment.urlApi + `/incidents/${id}/${partitionKey}`,
       {
         headers: { Authorization: 'Bearer ' + this.auth.getToken() },
@@ -28,30 +29,13 @@ export class IncidentService {
     );
   }
 
-  public getIncidentsOfTheDay(ids: string[]): Observable<IIncident[]> {
-    return this.http.post<IIncident[]>(
-      environment.urlApi + `/incidents/GetIncidentsOfTheDay`,
+  public GetFromList(ids: string[]): Observable<ReportModel[]> {
+    return this.http.post<ReportModel[]>(
+      environment.urlApi + `/incidents/IncidentsFromList`,
       ids,
       {
         headers: { Authorization: 'Bearer ' + this.auth.getToken() },
       },
     );
   }
-}
-
-export interface IIncident {
-  partition_key: string;
-  priority: string;
-  reporter: {
-    id: string;
-    names: string;
-    lastNames: string;
-    relationshipWithTheUniversity: string;
-  };
-  location: {
-    block: string;
-    classroom: number;
-    pointOfReference: string;
-  };
-  id: string;
 }

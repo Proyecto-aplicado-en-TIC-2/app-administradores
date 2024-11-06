@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilledButtonComponent } from '../filled-button/filled-button.component';
-import { IAPH } from '../../interface/aph.interface';
 import { AphService } from '../../service/aph.service';
+import { AphModel } from '../../models/aph';
 
 @Component({
   selector: 'app-table-aph',
@@ -16,7 +16,6 @@ import { AphService } from '../../service/aph.service';
             <td><h4>Apellidos</h4></td>
             <td><h4>Correo electrónico</h4></td>
             <td><h4>Numero de teléfono</h4></td>
-            <td><h4>Relación con la universidad</h4></td>
             <td><h4>Cuadrante</h4></td>
           </tr>
         </thead>
@@ -34,9 +33,6 @@ import { AphService } from '../../service/aph.service';
               </td>
               <td class="text">
                 <p>{{ item.phone_number }}</p>
-              </td>
-              <td class="text">
-                <p>{{ item.relationship_with_the_university }}</p>
               </td>
               <td class="text">
                 <p>{{ item.quadrant }}</p>
@@ -93,7 +89,7 @@ import { AphService } from '../../service/aph.service';
   `,
 })
 export class TableAphComponent implements OnInit {
-  items: IAPH[] = [];
+  items: AphModel[] = [];
 
   constructor(private aphService: AphService) {}
 
