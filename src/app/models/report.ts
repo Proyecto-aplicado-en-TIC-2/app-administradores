@@ -6,6 +6,7 @@ export class ReportModel {
   public affected: string = '';
   public reporter = new Reporter();
   public location = new Location();
+  public _ts: number = 0;
 }
 
 class Location {

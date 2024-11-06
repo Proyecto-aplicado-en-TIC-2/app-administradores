@@ -5,11 +5,11 @@ import { ReportsService } from '../../service/reports.service';
 import { CasesService } from '../../service/cases.service';
 import { ListReports } from '../../service/list/list-reports.service';
 import { CommunityUpbService } from '../../service/community-upb.service';
-import { IAPH } from '../../interface/aph.interface';
 import { AphService } from '../../service/aph.service';
 import { ReportModel } from '../../models/report';
 import { CommunityModel } from '../../models/community';
-import {Cases} from "../../models/case";
+import { Cases } from '../../models/case';
+import { AphModel } from '../../models/aph';
 
 @Component({
   selector: 'app-emergency-card-reported',
@@ -23,11 +23,11 @@ import {Cases} from "../../models/case";
             <div class="header">
               <div class="box_info">
                 <h5>Prioridad</h5>
-                <p class="prioridad">{{item.priority}}</p>
+                <p class="prioridad">{{ item.priority }}</p>
               </div>
               <div class="box_info">
                 <h5>Categoría</h5>
-                <p class="prioridad">{{item.partition_key}}</p>
+                <p class="prioridad">{{ item.partition_key }}</p>
               </div>
             </div>
 
@@ -68,7 +68,7 @@ import {Cases} from "../../models/case";
               texto="Asignar APH"
               (click)="openModalAssignAph(item)"
             />
-            <app-filled-button texto="Mas" (click)="openModal(item)"/>
+            <app-filled-button texto="Mas" (click)="openModal(item)" />
           </div>
         </section>
       } @empty {
@@ -103,7 +103,6 @@ import {Cases} from "../../models/case";
                 <h5>Afectado</h5>
                 <p>{{ reportModal.affected }}</p>
               </div>
-
             </div>
             <div class="box roboto-regular">
               <h2>Locación</h2>
@@ -177,7 +176,9 @@ import {Cases} from "../../models/case";
               <div class="box_info">
                 <h5>Contacto de emergencia</h5>
                 <p>
-                  {{ communityUpbModal.userDetails.emergencyContactPhoneNumber }}
+                  {{
+                    communityUpbModal.userDetails.emergencyContactPhoneNumber
+                  }}
                 </p>
               </div>
 
@@ -219,7 +220,7 @@ import {Cases} from "../../models/case";
             <div></div>
           </div>
           <div class="buttons_footer">
-            <app-filled-button texto="Cerrar" (click)="closeModal()"/>
+            <app-filled-button texto="Cerrar" (click)="closeModal()" />
           </div>
         </div>
       </div>
@@ -231,12 +232,12 @@ import {Cases} from "../../models/case";
             <div class="box roboto-regular">
               <table>
                 <thead>
-                <tr class="roboto-regular">
-                  <td><h4>Nombres</h4></td>
-                  <td><h4>Apellidos</h4></td>
-                  <td><h4>Numero de teléfono</h4></td>
-                  <td><h4>Cuadrante</h4></td>
-                </tr>
+                  <tr class="roboto-regular">
+                    <td><h4>Nombres</h4></td>
+                    <td><h4>Apellidos</h4></td>
+                    <td><h4>Numero de teléfono</h4></td>
+                    <td><h4>Cuadrante</h4></td>
+                  </tr>
                 </thead>
                 <tbody class="roboto-regular">
                   @for (item of items; track item.id) {
@@ -270,7 +271,7 @@ import {Cases} from "../../models/case";
             </div>
           </div>
           <div class="buttons_footer">
-            <app-filled-button texto="Cerrar" (click)="closeModalAssignAph()"/>
+            <app-filled-button texto="Cerrar" (click)="closeModalAssignAph()" />
           </div>
         </div>
       </div>
@@ -296,13 +297,13 @@ import {Cases} from "../../models/case";
       border-radius: 8px;
       box-shadow: 0 4px 4px 0 var(--md-sys-color-shadow);
 
-      .header{
+      .header {
         display: flex;
         flex-direction: row;
         gap: 10px;
       }
 
-      h4{
+      h4 {
         margin: 0;
         padding-left: 10px;
       }
@@ -359,11 +360,10 @@ import {Cases} from "../../models/case";
       .prioridad {
         color: var(--md-sys-color-primary);
       }
-      .category{
+      .category {
         font-size: 26px;
         color: var(--md-sys-color-primary);
       }
-
     }
 
     .buttons_footer {
@@ -465,12 +465,10 @@ export class EmergencyCardReportedComponent {
   openModal(report: ReportModel) {
     this.reportModal = report;
     // consultamos el usuario
-    this.communityUpbService
-      .getById(report.reporter.id)
-      .subscribe((casos) => {
-        this.communityUpbModal = casos;
-        this.isIncidentModalOpen = true;
-      });
+    this.communityUpbService.getById(report.reporter.id).subscribe((casos) => {
+      this.communityUpbModal = casos;
+      this.isIncidentModalOpen = true;
+    });
   }
 
   closeModal() {
@@ -480,7 +478,7 @@ export class EmergencyCardReportedComponent {
   isAssignAphModalOpen = false;
   incidenciaId = '';
   partition_keyModalOpen: Cases = 0;
-  items: IAPH[] = [];
+  items: AphModel[] = [];
   openModalAssignAph(report: ReportModel) {
     this.incidenciaId = report.id; // Id del caso abierto (Incidente)
     this.partition_keyModalOpen = report.partition_key; // Tipo de caso - Medico - Incendio
@@ -496,7 +494,7 @@ export class EmergencyCardReportedComponent {
     this.isAssignAphModalOpen = false;
   }
 
-  AssignAph(aph: IAPH) {
+  AssignAph(aph: AphModel) {
     // Objeto para la asignación
     let assignAph = {
       user_id: aph.id,

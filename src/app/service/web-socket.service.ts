@@ -3,7 +3,7 @@ import { Socket } from 'ngx-socket-io';
 import { AuthService } from './auth.service';
 import { ListReports } from './list/list-reports.service';
 import { environment } from '../../environments/environment';
-import {ReportModel} from "../models/report";
+import { ReportModel } from '../models/report';
 
 @Injectable({
   providedIn: 'root',

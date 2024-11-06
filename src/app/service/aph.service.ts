@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { IAPH } from '../interface/aph.interface';
 import { environment } from '../../environments/environment';
+import { AphModel } from '../models/aph';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,18 @@ export class AphService {
   ) {}
 
   public getAllAph() {
-    return this.http.get<IAPH[]>(environment.urlApi + '/prehospital-care', {
+    return this.http.get<AphModel[]>(environment.urlApi + '/prehospital-care', {
       headers: { Authorization: 'Bearer ' + this.auth.getToken() },
     });
+  }
+
+  public getFromList(list: string[]) {
+    return this.http.post<AphModel[]>(
+      environment.urlApi + '/prehospital-care/GetAphFromList',
+      list,
+      {
+        headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+      },
+    );
   }
 }
