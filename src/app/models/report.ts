@@ -32,7 +32,7 @@ export enum RelationshipWithTheUniversity {
 export enum Cases {
   Incendio,
   Medico,
-  Estrctural,
+  Estructural,
 }
 
 export enum Priorty {

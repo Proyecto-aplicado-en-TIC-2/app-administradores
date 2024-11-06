@@ -127,7 +127,7 @@ import { NgForOf } from '@angular/common';
                   >
                     <p>{{ item.partition_key }}</p>
                   </div>
-                } @else if (item.partition_key.toString() == 'Estrctural') {
+                } @else if (item.partition_key.toString() == 'Estructural') {
                   <div
                     class="category"
                     style="
