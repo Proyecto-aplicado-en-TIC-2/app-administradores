@@ -481,7 +481,7 @@ export class EmergencyCardReportedComponent {
   items: AphModel[] = [];
   openModalAssignAph(report: ReportModel) {
     this.incidenciaId = report.id; // Id del caso abierto (Incidente)
-    this.partition_keyModalOpen = report.partition_key; // Tipo de caso - Medico - Incendio
+    this.partition_keyModalOpen = report.partition_key.valueOf(); // Tipo de caso - Medico - Incendio
 
     // Consulta de APH
     this.aphService.getAllAph().subscribe((data) => {
