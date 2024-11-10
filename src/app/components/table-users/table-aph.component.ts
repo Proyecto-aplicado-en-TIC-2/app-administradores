@@ -59,7 +59,7 @@ import { FilledButtonComponent2 } from '../filled-button/filled-button-2.compone
           </tr>
         </thead>
         <tbody class="roboto-regular">
-          @for (item of items; track item.id) {
+          @for (item of paginated; track item.id) {
             <tr>
               <td class="text">
                 <p>{{ item.names }}</p>
