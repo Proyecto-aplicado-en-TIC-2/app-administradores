@@ -124,6 +124,7 @@ import { FilledButtonComponent2 } from '../filled-button/filled-button-2.compone
           color: var(--md-sys-color-on-surface-variant);
           margin: 0;
           padding: 7px 15px;
+          width: max-content;
         }
 
         tr {

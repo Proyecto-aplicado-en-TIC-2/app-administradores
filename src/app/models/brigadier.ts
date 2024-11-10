@@ -8,4 +8,5 @@ export class BrigadierModel {
   public relationship_with_the_university: string = '';
   public in_service: boolean = false;
   public quadrant: string = '';
+  public _ts: number = 0;
 }
