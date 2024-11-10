@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilledButtonComponent } from '../filled-button/filled-button.component';
-import { IBrigadier } from '../../interface/brigadier.interface';
 import { BrigadierService } from '../../service/brigadier.service';
+import { BrigadierModel } from '../../models/brigadier';
 
 @Component({
   selector: 'app-table-brigadiers',
@@ -93,7 +93,7 @@ import { BrigadierService } from '../../service/brigadier.service';
   `,
 })
 export class TableBrigadiersComponent implements OnInit {
-  items: IBrigadier[] = [];
+  items: BrigadierModel[] = [];
 
   constructor(private brigadierService: BrigadierService) {}
 
