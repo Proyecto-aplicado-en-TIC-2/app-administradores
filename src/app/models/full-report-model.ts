@@ -1,9 +1,10 @@
 import { Cases } from './case';
 import { Block, RelationshipWithTheUniversity } from './report';
 
-export class FullReport {
+export class FullReportModel {
   public id: string = '';
   public partition_key: Cases = 0;
+  public help: help = new help();
   public whatIsHappening: string = '';
   public affected: string = '';
   public date: date = new date();
@@ -21,6 +22,12 @@ export class FullReport {
 }
 
 // Clases ayuda
+
+class help {
+  user_id: string = '';
+  case_id: string = '';
+  partition_key: string = '';
+}
 
 class date {
   date: string = '';

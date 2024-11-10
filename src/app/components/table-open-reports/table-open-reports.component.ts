@@ -697,7 +697,8 @@ export class TableOpenReportsComponent implements OnInit {
       this.getBrigadier(this.itemModalCase.brigadista_Id).subscribe((value) => {
         this.itemModalBrigadier = value[0];
         this.isModal = true;
-        console.log(this.itemModalBrigadier.id);
+        console.log('user_id', this.itemModalCommunityUpb.id);
+        console.log('case_id', this.itemModalCase.id);
       });
     });
   }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
-import { FullReport } from '../models/full-report';
+import { FullReportModel } from '../models/full-report-model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class FullReportsService {
   ) {}
 
   public getAll() {
-    return this.http.get<FullReport[]>(
+    return this.http.get<FullReportModel[]>(
       environment.urlApi + '/emergency-reports',
       {
         headers: { Authorization: 'Bearer ' + this.auth.getToken() },
