@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FilledButtonComponent } from '../filled-button/filled-button.component';
 import { UpbCommunityService } from '../../service/upb-community.service';
-import {FormsModule} from "@angular/forms";
-import {NgForOf} from "@angular/common";
-import {UpbCommunityModel} from "../../models/upb-community";
-import {FilledButtonComponent2} from "../filled-button/filled-button-2.component";
+import { FormsModule } from '@angular/forms';
+import { NgForOf } from '@angular/common';
+import { UpbCommunityModel } from '../../models/upb-community';
+import { FilledButtonComponent2 } from '../filled-button/filled-button-2.component';
 
 @Component({
   selector: 'app-table-upb-community',
   standalone: true,
-  imports: [FilledButtonComponent, FormsModule, NgForOf, FilledButtonComponent2],
+  imports: [
+    FilledButtonComponent,
+    FormsModule,
+    NgForOf,
+    FilledButtonComponent2,
+  ],
   template: `
     <!-- Botones de paginación -->
     <div class="pagination-controls roboto-regular">
@@ -249,7 +254,7 @@ export class TableUpbCommunityComponent implements OnInit {
       this.items = data;
       this.Ordenar();
       this.updatePagination();
-      console.log("tamaño", this.items.length)
+      console.log('tamaño', this.items.length);
     });
   }
 
