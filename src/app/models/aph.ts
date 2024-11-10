@@ -7,4 +7,5 @@ export class AphModel {
   public phone_number: string = '';
   public in_service: string = '';
   public quadrant: string = '';
+  public _ts: number = 0;
 }
