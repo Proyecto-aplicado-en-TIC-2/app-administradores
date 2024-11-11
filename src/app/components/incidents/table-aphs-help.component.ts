@@ -555,6 +555,6 @@ export class TableAphsHelpComponent {
     this.fillListLocal();
 
     // Cerrar el modal
-    this.isModal = true;
+    this.isModal = false;
   }
 }
