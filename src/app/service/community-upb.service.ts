@@ -4,7 +4,6 @@ import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CommunityModel } from '../models/community';
-import { AphModel } from '../models/aph';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +13,12 @@ export class CommunityUpbService {
     private http: HttpClient,
     private auth: AuthService,
   ) {}
+
+  public getAll() {
+    return this.http.get<CommunityModel[]>(environment.urlApi + '/community', {
+      headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+    });
+  }
 
   public getById(id: string): Observable<CommunityModel> {
     return this.http.get<CommunityModel>(
@@ -32,5 +37,11 @@ export class CommunityUpbService {
         headers: { Authorization: 'Bearer ' + this.auth.getToken() },
       },
     );
+  }
+
+  public deleteById(id: string) {
+    return this.http.delete<any>(environment.urlApi + `/community/${id}`, {
+      headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+    });
   }
 }

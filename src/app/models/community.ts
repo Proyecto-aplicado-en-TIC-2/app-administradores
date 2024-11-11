@@ -7,6 +7,7 @@ export class CommunityModel {
   public phone_number: string = '';
   public relationshipWithTheUniversity: RelationshipWithTheUniversity = 0;
   public userDetails = new UserDetails();
+  public _ts: number = 0;
 }
 
 class UserDetails {

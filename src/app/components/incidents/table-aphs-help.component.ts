@@ -470,7 +470,8 @@ export class TableAphsHelpComponent {
       // Obtenemos los brigadistas conectados
       this.casesService.getAllConnections().subscribe((data) => {
         let listBrigades = data.filter(
-          (value1) => value1.partition_key == 'brigade_accounts' && value1.inService,
+          (value1) =>
+            value1.partition_key == 'brigade_accounts' && value1.inService,
         );
         console.log('Brigadistas conectados', listBrigades);
 

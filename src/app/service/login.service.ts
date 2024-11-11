@@ -32,6 +32,12 @@ export class LoginService {
       return of(false);
     }
   }
+
+  public deleteCuenta(email: string) {
+    return this.http.delete<boolean>(environment.urlApi + `/auth/${email}`, {
+      headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+    });
+  }
 }
 
 interface ResponseLogIn {

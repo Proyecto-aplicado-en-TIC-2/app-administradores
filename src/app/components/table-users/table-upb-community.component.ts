@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FilledButtonComponent } from '../filled-button/filled-button.component';
-import { UpbCommunityService } from '../../service/upb-community.service';
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
-import { UpbCommunityModel } from '../../models/upb-community';
 import { FilledButtonComponent2 } from '../filled-button/filled-button-2.component';
+import { LoginService } from '../../service/login.service';
+import { CommunityUpbService } from '../../service/community-upb.service';
+import { CommunityModel } from '../../models/community';
 
 @Component({
   selector: 'app-table-upb-community',
@@ -73,18 +74,50 @@ import { FilledButtonComponent2 } from '../filled-button/filled-button-2.compone
               </td>
               <td>
                 <div class="buttons">
-                  <app-filled-button-2 texto="Eliminar" />
+                  <app-filled-button-2
+                    texto="Eliminar"
+                    (click)="openModalDeleteCommunity(item)"
+                  />
                   <app-filled-button-2 texto="Actualizar" />
                   <app-filled-button-2 texto="Ver" />
                 </div>
               </td>
             </tr>
           } @empty {
-            <p>Cargando datos</p>
+            <p style="margin-left: 20px">Sin datos disponibles</p>
           }
         </tbody>
       </table>
     </div>
+
+    <!--Modal de confirmacion-->
+    @if (statusModalDelete) {
+      <div
+        class="modal-overlay-delete-modal"
+        (click)="closeModalDeleteCommunity()"
+      >
+        <div class="modal-content-delete-modal">
+          <div class="container container_2">
+            <div class="box roboto-regular">
+              <h1 class="roboto-regular">Eliminar usuario</h1>
+              <p>
+                ¿Está seguro de que desea eliminar el usuario
+                <b>{{ itemDeleteTemp.names }} {{ itemDeleteTemp.last_names }}</b
+                >?
+              </p>
+              <p>Esta acción no se puede deshacer.</p>
+            </div>
+          </div>
+          <div class="buttons_footer-delete-modal">
+            <app-filled-button-2
+              texto="Cancelar"
+              (click)="closeModalDeleteCommunity()"
+            />
+            <app-filled-button texto="Aceptar" (click)="deleteCommunity()" />
+          </div>
+        </div>
+      </div>
+    }
   `,
   styles: `
     /* Estilo de los botones de control*/
@@ -233,24 +266,56 @@ import { FilledButtonComponent2 } from '../filled-button/filled-button-2.compone
         margin-top: 20px;
       }
     }
+
+    .modal-overlay-delete-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content-delete-modal {
+      max-width: 60%;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .buttons_footer-delete-modal {
+      display: flex;
+      flex-direction: row;
+      margin-top: 45px;
+      gap: 30px;
+      justify-content: center;
+    }
   `,
 })
 export class TableUpbCommunityComponent implements OnInit {
-  items: UpbCommunityModel[] = [];
+  items: CommunityModel[] = [];
 
   currentPage = 1; // Página actual
   itemsPerPage = 10; // Número de elementos por página
-  paginated: UpbCommunityModel[] = []; // Reportes de la página actual
+  paginated: CommunityModel[] = []; // Reportes de la página actual
   itemsPerPageOptions = [10, 20, 50]; // Opciones de elementos por página
 
-  constructor(private upbCommunityService: UpbCommunityService) {}
+  constructor(
+    private communityUpbService: CommunityUpbService,
+    private loginService: LoginService,
+  ) {}
 
   ngOnInit(): void {
     this.LlenarDatos();
   }
 
   LlenarDatos(): void {
-    this.upbCommunityService.getAll().subscribe((data) => {
+    this.communityUpbService.getAll().subscribe((data) => {
       this.items = data;
       this.Ordenar();
       this.updatePagination();
@@ -298,5 +363,43 @@ export class TableUpbCommunityComponent implements OnInit {
 
   Ordenar() {
     this.items.sort((a, b) => b._ts - a._ts);
+  }
+
+  // Modal para eliminar uno de la comunidad
+  statusModalDelete = false;
+  itemDeleteTemp = new CommunityModel();
+
+  // Eliminar un usuario
+  openModalDeleteCommunity(item: CommunityModel) {
+    this.statusModalDelete = true;
+    this.itemDeleteTemp = item;
+  }
+
+  deleteCommunity() {
+    this.loginService
+      .deleteCuenta(this.itemDeleteTemp.mail)
+      .subscribe((value) => {
+        console.log('Resultado de eliminar la cuenta', value);
+        if (value) {
+          // se elimino la cuenta
+          if (value) {
+            // Eliminamos el usuario
+            this.communityUpbService
+              .deleteById(this.itemDeleteTemp.id)
+              .subscribe((value) => {
+                this.closeModalDeleteCommunity();
+                this.LlenarDatos();
+              });
+          } else {
+            window.alert('No es posible eliminar el usuario');
+          }
+        } else {
+          window.alert('Usuario sin cuenta');
+        }
+      });
+  }
+
+  closeModalDeleteCommunity() {
+    this.statusModalDelete = false;
   }
 }
