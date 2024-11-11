@@ -28,4 +28,13 @@ export class AphService {
       },
     );
   }
+
+  public getAphById(id: string) {
+    return this.http.get<AphModel>(
+      environment.urlApi + '/prehospital-care/' + id,
+      {
+        headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+      },
+    );
+  }
 }

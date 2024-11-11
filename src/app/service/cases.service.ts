@@ -27,4 +27,22 @@ export class CasesService {
       },
     );
   }
+
+  public getCasesNeedHelp() {
+    return this.http.get<CaseModel[]>(
+      environment.urlApi + '/websockets/GetReportsNeedHelp',
+      {
+        headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+      },
+    );
+  }
+
+  public getCaseById(id: string, key: string) {
+    return this.http.get<CaseModel>(
+      environment.urlApi + `/websockets/id/${id}/${key}`,
+      {
+        headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+      },
+    );
+  }
 }
