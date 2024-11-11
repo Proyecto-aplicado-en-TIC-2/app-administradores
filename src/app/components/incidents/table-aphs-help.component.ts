@@ -470,7 +470,7 @@ export class TableAphsHelpComponent {
       // Obtenemos los brigadistas conectados
       this.casesService.getAllConnections().subscribe((data) => {
         let listBrigades = data.filter(
-          (value1) => value1.partition_key == 'brigade_accounts',
+          (value1) => value1.partition_key == 'brigade_accounts' && value1.inService,
         );
         console.log('Brigadistas conectados', listBrigades);
 
@@ -492,10 +492,7 @@ export class TableAphsHelpComponent {
         this.brigadierService
           .GetBrigadierFromList(listIdsBrigade)
           .subscribe((value) => {
-            console.log('Lista de los brigadistas', value);
-            let listfin = value.filter((value1) => value1.in_service);
-            console.log('Lista fal de los brigadistas', listfin);
-            this.items = listfin;
+            this.items = value;
             this.updatePagination();
           });
       });
