@@ -126,7 +126,6 @@ export class TableAphsHelpComponent {
   constructor(
     protected listCasesNeedAph: ListCasesNeedAph, // lista con los aph que necesitan un brigadista
     private casesService: CasesService,
-    private webSocketService: WebSocketService,
     private aphService: AphService,
     private communityUpbService: CommunityUpbService,
   ) {
@@ -139,19 +138,6 @@ export class TableAphsHelpComponent {
       this.fillListLocal();
     }
 
-    this.webSocketService.outAphHelp.subscribe((value) => {
-      // Consultamos él casó y lo añadimos a la lista
-      this.getCaseService(
-        value.case_info.case_id,
-        value.case_info.partition_key,
-      );
-      const caseTemp = this.getCaseList(value.case_info.case_id);
-      this.getAphService(caseTemp.aphThatTakeCare_Id);
-      this.getCommunityService(caseTemp.reporter_Id);
-
-      // Actualizamos los cambios
-      //this.fillListLocal();
-    });
   }
 
   // lLenar la lista de los casos
@@ -194,25 +180,6 @@ export class TableAphsHelpComponent {
     this.listCases = this.listCasesNeedAph.getCase();
     this.listAph = this.listCasesNeedAph.getAph();
     this.listCommunity = this.listCasesNeedAph.getCommunity();
-  }
-
-  // Extraer dato por id cuando el Socket agrega un nuevo item
-  getCaseService(id: string, key: string) {
-    this.casesService.getCaseById(id, key).subscribe((value) => {
-      this.listCasesNeedAph.pushCase(value);
-    });
-  }
-
-  getAphService(id: string) {
-    this.aphService.getAphById(id).subscribe((value) => {
-      this.listCasesNeedAph.pushAph(value);
-    });
-  }
-
-  getCommunityService(id: string) {
-    this.communityUpbService.getById(id).subscribe((value) => {
-      this.listCasesNeedAph.pushCommunity(value);
-    });
   }
 
   // Buscar un item por Id de las listas locales
