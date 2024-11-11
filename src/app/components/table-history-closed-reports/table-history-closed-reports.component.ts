@@ -91,9 +91,9 @@ import { CasesService } from '../../service/cases.service';
               <td class="text">
                 <p>
                   {{
-                    this.getAph(item.aphThatTakeCare)?.names +
+                    this.getAph(item.aphThatTakeCare).names +
                       ' ' +
-                      this.getAph(item.aphThatTakeCare)?.last_names
+                      this.getAph(item.aphThatTakeCare).last_names
                   }}
                 </p>
               </td>

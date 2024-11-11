@@ -8,11 +8,14 @@ import { AphService } from '../../service/aph.service';
 import { AphModel } from '../../models/aph';
 import { CommunityModel } from '../../models/community';
 import { CommunityUpbService } from '../../service/community-upb.service';
+import {FilledButtonComponent2} from "../filled-button/filled-button-2.component";
+import {FormsModule} from "@angular/forms";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-table-aphs-help',
   standalone: true,
-  imports: [FilledButtonComponent],
+  imports: [FilledButtonComponent, FilledButtonComponent2, FormsModule, NgForOf],
   template: `
     <section id="content">
       <!--   Información de las listas   -->
@@ -23,7 +26,6 @@ import { CommunityUpbService } from '../../service/community-upb.service';
           </p>
         </div>
       }
-
       <!--   Lista de los casos   -->
       <div class="list">
         <div class="body roboto-regular">
@@ -148,7 +150,7 @@ export class TableAphsHelpComponent {
       this.getCommunityService(caseTemp.reporter_Id);
 
       // Actualizamos los cambios
-      this.fillListLocal();
+      //this.fillListLocal();
     });
   }
 
@@ -171,11 +173,11 @@ export class TableAphsHelpComponent {
         listCommunityId.push(item.reporter_Id);
       });
 
-      // Realizamos la consulta
+      // Realizamos la consulta de los aph
       this.aphService.getFromList(listAphId).subscribe((value) => {
         this.listCasesNeedAph.fillAph(value);
 
-        // Realizamos la consulta
+        // Realizamos la consulta de los usuarios comunidad
         this.communityUpbService
           .getFromList(listCommunityId)
           .subscribe((value) => {
@@ -227,5 +229,14 @@ export class TableAphsHelpComponent {
       this.listCommunity.find((value) => (value.id = id)) ||
       new CommunityModel()
     );
+  }
+
+  // Modal para asignar un brigadista a un caso
+  isModal = false; // Variable de cambio para el modal
+
+  openModal(idReport: string) {}
+
+  closeModal() {
+    this.isModal = false;
   }
 }
