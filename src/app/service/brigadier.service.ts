@@ -27,4 +27,14 @@ export class BrigadierService {
       },
     );
   }
+
+  public GetBrigadierFromList(list: string[]) {
+    return this.http.post<BrigadierModel[]>(
+      environment.urlApi + '/brigadiers/GetBrigadierFromList',
+      list,
+      {
+        headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+      },
+    );
+  }
 }

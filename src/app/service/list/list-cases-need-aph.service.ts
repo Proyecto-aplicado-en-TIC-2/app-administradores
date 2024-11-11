@@ -11,6 +11,7 @@ export class ListCasesNeedAph {
   listAph: AphModel[] = [];
   listCommunity: CommunityModel[] = [];
 
+  // Obtener las listas
   getCase() {
     return this.listCases;
   }
@@ -23,6 +24,7 @@ export class ListCasesNeedAph {
     return this.listCommunity;
   }
 
+  // Agregar un item a la lista
   pushCase(item: CaseModel) {
     this.listCases.push(item);
   }
@@ -35,10 +37,12 @@ export class ListCasesNeedAph {
     this.listCommunity.push(item);
   }
 
+  // Tamaño de las listas
   lengthCase() {
     return this.listCases.length;
   }
 
+  // LLenar las listas
   fillCase(list: CaseModel[]) {
     this.listCases = list;
   }
@@ -49,5 +53,21 @@ export class ListCasesNeedAph {
 
   fillCommunity(list: CommunityModel[]) {
     this.listCommunity = list;
+  }
+
+  // Buscar items en las listas
+  findCaseById(id: string) {
+    return this.listCases.find((value) => (value.id = id)) || new CaseModel();
+  }
+
+  findAphById(id: string) {
+    return this.listAph.find((value) => (value.id = id)) || new AphModel();
+  }
+
+  findCommunityById(id: string) {
+    return (
+      this.listCommunity.find((value) => (value.id = id)) ||
+      new CommunityModel()
+    );
   }
 }

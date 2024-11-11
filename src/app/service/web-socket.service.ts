@@ -7,12 +7,12 @@ import { ReportModel } from '../models/report';
 import { ListCasesNeedAph } from './list/list-cases-need-aph.service';
 import { AphHelpModel } from '../models/aph-help';
 import { CaseModel } from '../models/case';
-import {CasesService} from "./cases.service";
-import {AphService} from "./aph.service";
-import {CommunityUpbService} from "./community-upb.service";
-import {firstValueFrom} from "rxjs";
-import {AphModel} from "../models/aph";
-import {CommunityModel} from "../models/community";
+import { CasesService } from './cases.service';
+import { AphService } from './aph.service';
+import { CommunityUpbService } from './community-upb.service';
+import { firstValueFrom } from 'rxjs';
+import { AphModel } from '../models/aph';
+import { CommunityModel } from '../models/community';
 
 @Injectable({
   providedIn: 'root',
@@ -75,14 +75,19 @@ export class WebSocketService extends Socket {
       console.log('📥 Socket ->', 'Ayuda Aph', res);
 
       // Consultamos él casó y lo añadimos a la lista
-      const tempCase = await this.getCaseService(res.case_info.case_id, res.case_info.partition_key);
+      const tempCase = await this.getCaseService(
+        res.case_info.case_id,
+        res.case_info.partition_key,
+      );
       const tempAph = await this.getAphService(tempCase.aphThatTakeCare_Id);
-      const tempCommunity = await this.getCommunityService(tempCase.reporter_Id);
+      const tempCommunity = await this.getCommunityService(
+        tempCase.reporter_Id,
+      );
 
       // Añadimos a las listas
-      this.listCasesNeedAph.pushCase(tempCase)
-      this.listCasesNeedAph.pushAph(tempAph)
-      this.listCasesNeedAph.pushCommunity(tempCommunity)
+      this.listCasesNeedAph.pushCase(tempCase);
+      this.listCasesNeedAph.pushAph(tempAph);
+      this.listCasesNeedAph.pushCommunity(tempCommunity);
 
       // Enviamos la señal
       this.outAphHelp.emit(res);
@@ -96,6 +101,15 @@ export class WebSocketService extends Socket {
   // Asignar un aph
   AssignAph(assignment: any): void {
     this.ioSocket.emit('APH', assignment);
+  }
+
+  // Asignar un brigade
+  AssignBrigade(item: {
+    user_id: string;
+    partition_key: string;
+    case_id: string;
+  }): void {
+    this.ioSocket.emit('Brigadiers', item);
   }
 
   // Alerta global
@@ -123,7 +137,6 @@ export class WebSocketService extends Socket {
   }
 
   async getCommunityService(id: string) {
-
     try {
       return await firstValueFrom(this.communityUpbService.getById(id));
     } catch {
