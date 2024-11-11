@@ -72,6 +72,6 @@ export class ListCasesNeedAph {
   }
 
   putCase(id: string) {
-    this.listCases = this.listCases.filter(value => value.id !== id);
+    this.listCases = this.listCases.filter((value) => value.id !== id);
   }
 }

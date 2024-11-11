@@ -29,10 +29,15 @@ export class LoginComponent {
     }
   }
 
+  // Estado de carga
+  loading = false;
+  message = '';
+
   login() {
     console.log('Captura de datos', this.mail.value, this.password.value);
     console.log('Realizar petición');
-
+    this.message = 'Cargando...';
+    this.loading = true;
     this.loginService.login(this.mail.value, this.password.value).subscribe(
       (date) => {
         console.log(date);
@@ -40,12 +45,14 @@ export class LoginComponent {
           this.authService.saveToken(date.access_token);
           this.router.navigate(['/incidents']);
         } else {
-          window.alert('Correo o contraseña incorrectos');
+          this.message = 'Correo o contraseña incorrectos';
+          this.loading = false;
         }
       },
       (error) => {
         console.log(error);
-        window.alert('Sin conexión con el servidor');
+        this.message = 'Sin conexión con el servidor';
+        this.loading = false;
       },
     );
   }

@@ -385,7 +385,7 @@ export class TableAphsHelpComponent {
 
   // lLenar la lista de los casos
   fillList() {
-    console.log('Inicio el llenado de los casos que necesitan brigadista')
+    console.log('Inicio el llenado de los casos que necesitan brigadista');
     // Obtenemos los casos que necesitan un aph
     this.casesService.getCasesNeedHelp().subscribe((value) => {
       this.listCasesNeedAph.fillCase(value);
@@ -549,10 +549,10 @@ export class TableAphsHelpComponent {
     });
 
     // Eliminamos la lista
-    this.listCasesNeedAph.putCase(this.caseItem.id)
+    this.listCasesNeedAph.putCase(this.caseItem.id);
 
     // Actualizar listas locales
-    this.fillListLocal()
+    this.fillListLocal();
 
     // Cerrar el modal
     this.isModal = true;
