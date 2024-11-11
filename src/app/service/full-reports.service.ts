@@ -2,26 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
-import { BrigadierModel } from '../models/brigadier';
+import { FullReportModel } from '../models/full-report-model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BrigadierService {
+export class FullReportsService {
   constructor(
     private http: HttpClient,
     private auth: AuthService,
   ) {}
 
   public getAll() {
-    return this.http.get<BrigadierModel[]>(environment.urlApi + '/brigadiers', {
-      headers: { Authorization: 'Bearer ' + this.auth.getToken() },
-    });
-  }
-
-  public getById(id: string) {
-    return this.http.get<BrigadierModel[]>(
-      environment.urlApi + '/brigadiers/' + id,
+    return this.http.get<FullReportModel[]>(
+      environment.urlApi + '/emergency-reports',
       {
         headers: { Authorization: 'Bearer ' + this.auth.getToken() },
       },

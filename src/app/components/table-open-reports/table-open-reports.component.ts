@@ -9,6 +9,10 @@ import { AphService } from '../../service/aph.service';
 import { FilledButtonComponent2 } from '../filled-button/filled-button-2.component';
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
+import { CommunityUpbService } from '../../service/community-upb.service';
+import { CommunityModel } from '../../models/community';
+import { BrigadierService } from '../../service/brigadier.service';
+import { BrigadierModel } from '../../models/brigadier';
 
 @Component({
   selector: 'app-table-open-reports',
@@ -47,7 +51,7 @@ import { NgForOf } from '@angular/common';
         Total de registros: <b>{{ totalRegister }}</b>
       </p>
     </div>
-    <div>
+    <div class="scroll_table">
       <table>
         <thead>
           <tr class="roboto-regular">
@@ -81,9 +85,9 @@ import { NgForOf } from '@angular/common';
               <td class="text">
                 <p>
                   {{
-                    getAph(getCase(item.id)?.aphThatTakeCare_Id)?.names +
+                    getAph(getCase(item.id).aphThatTakeCare_Id).names +
                       ' ' +
-                      getAph(getCase(item.id)?.aphThatTakeCare_Id)?.last_names
+                      getAph(getCase(item.id).aphThatTakeCare_Id).last_names
                   }}
                 </p>
               </td>
@@ -161,23 +165,222 @@ import { NgForOf } from '@angular/common';
 
               <td>
                 <div class="buttons">
-                  <app-filled-button-2 texto="Mas" />
+                  <app-filled-button-2
+                    texto="Mas"
+                    (click)="openModal(item.id)"
+                  />
                 </div>
               </td>
             </tr>
           } @empty {
-            <p>Cargando datos</p>
+            <p>Sin datos</p>
           }
         </tbody>
       </table>
     </div>
+    @if (isModal) {
+      <div class="modal-overlay" (click)="closeModal()"></div>
+      <div class="modal-content">
+        <div class="scroll_container">
+          <div class="container">
+            <div class="box roboto-regular">
+              <h1 class="roboto-regular">Reporte</h1>
+              <h3>Detalles</h3>
+              <div class="box_info">
+                <h5>Prioridad</h5>
+                <p>{{ itemModalReport.priority }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Categoría</h5>
+                <p>{{ itemModalReport.partition_key }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Que está sucediendo</h5>
+                <p>{{ itemModalReport.whatIsHappening }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Afectado</h5>
+                <p>{{ itemModalReport.affected }}</p>
+              </div>
+
+              <h3>Locación</h3>
+
+              <div class="box_info">
+                <h5>Bloque</h5>
+                <p>{{ itemModalReport.location.block }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Salon</h5>
+                <p>{{ itemModalReport.location.classroom }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Punto de referencia</h5>
+                <p>{{ itemModalReport.location.pointOfReference }}</p>
+              </div>
+            </div>
+
+            <div class="box roboto-regular">
+              <h1 class="roboto-regular">Quien reporta</h1>
+              <div class="box_info">
+                <h5>Nombres</h5>
+                <p>{{ itemModalCommunityUpb.names }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Apellidos</h5>
+                <p>{{ itemModalCommunityUpb.last_names }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Correo electronico</h5>
+                <p>{{ itemModalCommunityUpb.mail }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Numero de telefono</h5>
+                <p>{{ itemModalCommunityUpb.phone_number }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Relación con la universidad</h5>
+                <p>
+                  {{ itemModalCommunityUpb.relationshipWithTheUniversity }}
+                </p>
+              </div>
+            </div>
+
+            <div class="box roboto-regular">
+              <h1 class="roboto-regular">Detalles</h1>
+              <div class="box_info">
+                <h5>Id Universitario</h5>
+                <p>{{ itemModalCommunityUpb.userDetails.idUniversity }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Tipo de documento</h5>
+                <p>{{ itemModalCommunityUpb.userDetails.documetnType }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Numero de documento</h5>
+                <p>{{ itemModalCommunityUpb.userDetails.documentNumber }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Dirección</h5>
+                <p>{{ itemModalCommunityUpb.userDetails.address }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Contacto de emergencia</h5>
+                <p>
+                  {{
+                    itemModalCommunityUpb.userDetails
+                      .emergencyContactPhoneNumber
+                  }}
+                </p>
+              </div>
+
+              <div class="box_info">
+                <h5>Fecha de nacimiento</h5>
+                <p>
+                  {{ itemModalCommunityUpb.userDetails.birthday }}
+                </p>
+              </div>
+
+              <div class="box_info">
+                <h5>Tipo de sangre</h5>
+                <p>
+                  {{ itemModalCommunityUpb.userDetails.bloodType }}
+                </p>
+              </div>
+
+              <div class="box_info">
+                <h5>Alergias</h5>
+                <p>
+                  {{ itemModalCommunityUpb.userDetails.allergies }}
+                </p>
+              </div>
+
+              <div class="box_info">
+                <h5>Medicamentos dependientes</h5>
+                <p>
+                  {{ itemModalCommunityUpb.userDetails.dependentMedications }}
+                </p>
+              </div>
+
+              <div class="box_info">
+                <h5>Discapacidad</h5>
+                <p>
+                  {{ itemModalCommunityUpb.userDetails.disabilities }}
+                </p>
+              </div>
+            </div>
+
+            <div class="box roboto-regular">
+              <h1 class="roboto-regular">APH Asignado</h1>
+              <div class="box_info">
+                <h5>Nombres</h5>
+                <p>{{ itemModalAph.names }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Apellidos</h5>
+                <p>{{ itemModalAph.last_names }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Correo electronico</h5>
+                <p>{{ itemModalAph.mail }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Numero de telefono</h5>
+                <p>{{ itemModalAph.phone_number }}</p>
+              </div>
+            </div>
+
+            @if (itemModalBrigadier.id == '') {
+              <h1 class="roboto-regular">Sin brigadista</h1>
+            } @else {
+              <div class="box roboto-regular">
+                <h1 class="roboto-regular">Brigadista Asignado</h1>
+                <div class="box_info">
+                  <h5>Nombres</h5>
+                  <p>{{ itemModalBrigadier.names }}</p>
+                </div>
+
+                <div class="box_info">
+                  <h5>Apellidos</h5>
+                  <p>{{ itemModalBrigadier.last_names }}</p>
+                </div>
+
+                <div class="box_info">
+                  <h5>Correo electronico</h5>
+                  <p>{{ itemModalBrigadier.mail }}</p>
+                </div>
+
+                <div class="box_info">
+                  <h5>Numero de telefono</h5>
+                  <p>{{ itemModalBrigadier.phone_number }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+        <div class="buttons_footer">
+          <app-filled-button texto="Cerrar" (click)="closeModal()" />
+        </div>
+      </div>
+    }
   `,
   styles: `
-    div {
-      overflow-x: auto;
-      color: var(--md-sys-color-on-surface);
-    }
-
+    /* Estilo de los botones de control*/
     .pagination-controls {
       display: flex;
       flex-direction: row;
@@ -195,68 +398,153 @@ import { NgForOf } from '@angular/common';
       }
     }
 
-    table {
-      border-spacing: 0 10px;
-    }
+    /*Estilos de la tabla*/
+    .scroll_table {
+      overflow-x: auto;
+      color: var(--md-sys-color-on-surface);
 
-    thead {
-      h4 {
-        color: var(--md-sys-color-on-surface-variant);
-        margin: 0;
-        padding: 7px 15px;
+      table {
+        border-spacing: 0 10px;
       }
-      tr {
+
+      thead {
+        h4 {
+          color: var(--md-sys-color-on-surface-variant);
+          margin: 0;
+          padding: 7px 15px;
+        }
+
+        tr {
+          td {
+            background: var(--md-sys-color-surface-container);
+          }
+
+          .start {
+            border-radius: 50px 0 0 50px;
+          }
+
+          .end {
+            border-radius: 0 50px 50px 0;
+          }
+        }
+      }
+
+      tbody {
+        border-spacing: 10px 0;
+
         td {
-          background: var(--md-sys-color-surface-container);
-        }
-        .start {
-          border-radius: 50px 0 0 50px;
-        }
+          padding: 0 15px;
 
-        .end {
-          border-radius: 0 50px 50px 0;
+          p {
+            inline-size: max-content;
+            margin: 0;
+          }
+
+          .description {
+            width: 300px;
+            max-height: 2.5em;
+            overflow: hidden;
+            transition: max-height 1s ease-in;
+          }
+
+          .description:before {
+            max-height: 2.5em;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+          }
+
+          .description:hover {
+            max-height: 100em;
+          }
+
+          .category {
+            display: flex;
+            justify-content: center;
+          }
+
+          .buttons {
+            width: max-content;
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+          }
         }
       }
     }
 
-    tbody {
-      border-spacing: 10px 0;
+    /* Estilos del modal fondo */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
 
-      td {
-        padding: 0 15px;
+    /* Fondo scroll modal */
+    .scroll_container {
+      overflow-y: auto;
+    }
 
+    /* Estilos del modal */
+    .modal-content {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 1000;
+      max-width: 60%;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+
+      .box {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .box_info {
+          padding: 0 10px;
+        }
+
+        h1 {
+          font-size: 36px;
+        }
+
+        h3 {
+          margin: 0 10px;
+        }
+
+        h1,
+        h5,
         p {
-          inline-size: max-content;
           margin: 0;
         }
 
-        .description {
-          width: 300px;
-          max-height: 2.5em;
-          overflow: hidden;
-          transition: max-height 1s ease-in;
+        p {
+          padding-top: 5px;
         }
+      }
 
-        .description:before {
-          max-height: 2.5em;
-          overflow: hidden;
-          transition: max-height 0.3s ease-out;
-        }
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 30px;
+        color: var(--md-sys-color-on-surface);
+      }
 
-        .description:hover {
-          max-height: 100em;
-        }
-
-        .category {
-          display: flex;
-          justify-content: center;
-        }
-        .buttons {
-          width: max-content;
-          display: flex;
-          flex-direction: row;
-          gap: 20px;
-        }
+      .buttons_footer {
+        display: flex;
+        flex-direction: row;
+        margin-top: 20px;
       }
     }
   `,
@@ -276,6 +564,8 @@ export class TableOpenReportsComponent implements OnInit {
     private casesService: CasesService,
     private reportsService: ReportsService,
     private aphService: AphService,
+    private communityUpbService: CommunityUpbService,
+    private brigadierService: BrigadierService,
   ) {}
 
   ngOnInit(): void {
@@ -355,6 +645,8 @@ export class TableOpenReportsComponent implements OnInit {
     this.Reportes.sort((a, b) => b._ts - a._ts);
   }
 
+  // Extracción de datos
+
   fecha(numero: number) {
     return new Date(numero * 1000).toLocaleDateString('es-ES', {
       day: 'numeric',
@@ -367,12 +659,52 @@ export class TableOpenReportsComponent implements OnInit {
     return new Date(numero * 1000).toLocaleTimeString();
   }
 
-  getCase(id: string) {
-    return this.Casos.find((value) => value.id === id);
+  getReport(id: string) {
+    return this.Reportes.find((value) => value.id === id) || new ReportModel();
   }
 
-  getAph(id: string | undefined) {
-    return this.Aphs.find((value) => value.id === id);
+  getCase(id: string) {
+    return this.Casos.find((value) => value.id === id) || new CaseModel();
+  }
+
+  getAph(id: string) {
+    return this.Aphs.find((value) => value.id === id) || new AphModel();
+  }
+
+  getCommunity(id: string) {
+    return this.communityUpbService.getById(id);
+  }
+
+  getBrigadier(id: string) {
+    return this.brigadierService.getById(id);
+  }
+
+  // Modal
+  isModal = false; // Variable de cambio para el modal
+  itemModalReport: ReportModel = new ReportModel();
+  itemModalCase: CaseModel = new CaseModel();
+  itemModalAph: AphModel = new AphModel();
+  itemModalCommunityUpb = new CommunityModel();
+  itemModalBrigadier = new BrigadierModel();
+
+  openModal(idReport: string) {
+    this.itemModalReport = this.getReport(idReport);
+    this.itemModalCase = this.getCase(this.itemModalReport.id);
+    this.itemModalAph = this.getAph(this.itemModalCase.aphThatTakeCare_Id);
+    this.getCommunity(this.itemModalReport.reporter.id).subscribe((value) => {
+      this.itemModalCommunityUpb = value;
+
+      this.getBrigadier(this.itemModalCase.brigadista_Id).subscribe((value) => {
+        this.itemModalBrigadier = value[0];
+        this.isModal = true;
+        console.log('user_id', this.itemModalCommunityUpb.id);
+        console.log('case_id', this.itemModalCase.id);
+      });
+    });
+  }
+
+  closeModal() {
+    this.isModal = false;
   }
 
   protected readonly Cases = Cases;

@@ -104,6 +104,7 @@ import { AphModel } from '../../models/aph';
                 <p>{{ reportModal.affected }}</p>
               </div>
             </div>
+
             <div class="box roboto-regular">
               <h2>Locación</h2>
 

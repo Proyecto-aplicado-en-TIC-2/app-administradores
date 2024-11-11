@@ -7,6 +7,7 @@ export class CaseModel {
   public partition_key: Cases = 0;
   public State: string = '';
   public date = new date();
+  public _ts: number = 0;
 }
 
 export enum Cases {

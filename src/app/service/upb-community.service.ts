@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
-import { IUpbCommunity } from '../interface/upb-community.interface';
+import { UpbCommunityModel } from '../models/upb-community';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,11 @@ export class UpbCommunityService {
   ) {}
 
   public getAll() {
-    return this.http.get<IUpbCommunity[]>(environment.urlApi + '/community', {
-      headers: { Authorization: 'Bearer ' + this.auth.getToken() },
-    });
+    return this.http.get<UpbCommunityModel[]>(
+      environment.urlApi + '/community',
+      {
+        headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+      },
+    );
   }
 }
