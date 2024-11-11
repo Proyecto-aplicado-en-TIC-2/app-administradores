@@ -70,4 +70,8 @@ export class ListCasesNeedAph {
       new CommunityModel()
     );
   }
+
+  putCase(id: string) {
+    this.listCases = this.listCases.filter(value => value.id !== id);
+  }
 }
