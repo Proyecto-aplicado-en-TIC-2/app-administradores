@@ -711,7 +711,7 @@ export class TableUpbCommunityComponent implements OnInit {
   // Datos del formulario
   names = new FormControl('');
   last_names = new FormControl('');
-  mail = new FormControl('');
+  mail = new FormControl({value: '', disabled: true});
   phone_number = new FormControl('');
   relationshipWithTheUniversity = new FormControl('');
 
