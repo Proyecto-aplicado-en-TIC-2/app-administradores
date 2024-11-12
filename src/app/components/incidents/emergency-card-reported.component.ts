@@ -161,7 +161,7 @@ import { AphModel } from '../../models/aph';
 
               <div class="box_info">
                 <h5>Tipo de documento</h5>
-                <p>{{ communityUpbModal.userDetails.documetnType }}</p>
+                <p>{{ communityUpbModal.userDetails.documentType }}</p>
               </div>
 
               <div class="box_info">
