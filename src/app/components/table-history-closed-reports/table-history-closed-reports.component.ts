@@ -194,7 +194,7 @@ import { CasesService } from '../../service/cases.service';
 
               <div class="box_info">
                 <h5>Tipo de documento</h5>
-                <p>{{ itemModalCommunityUpb.userDetails.documetnType }}</p>
+                <p>{{ itemModalCommunityUpb.userDetails.documentType }}</p>
               </div>
 
               <div class="box_info">
