@@ -14,3 +14,16 @@ export class AphModel {
   public userDetails: UserDetails = new UserDetails();
   public _ts: number = 0;
 }
+
+export class AphModelCreateDto {
+  public names: string = '';
+  public last_names: string = '';
+  public mail: string = '';
+  public phone_number: string = '';
+  public relationshipWithTheUniversity: RelationshipWithTheUniversity =
+    RelationshipWithTheUniversity.estudent;
+  public in_service: boolean = false;
+  public quadrant: string = '';
+  public userDetails: UserDetails = new UserDetails();
+  public _ts: number = 0;
+}

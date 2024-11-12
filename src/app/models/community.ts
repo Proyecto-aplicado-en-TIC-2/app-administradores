@@ -11,6 +11,17 @@ export class CommunityModel {
   public _ts: number = 0;
 }
 
+export class CommunityModelCreateDto {
+  public names: string = '';
+  public last_names: string = '';
+  public mail: string = '';
+  public phone_number: string = '';
+  public relationshipWithTheUniversity: RelationshipWithTheUniversity =
+    RelationshipWithTheUniversity.estudent;
+  public userDetails = new UserDetails();
+  public _ts: number = 0;
+}
+
 export class UserDetails {
   public idUniversity: string = '';
   public documentType: DocumetnType = DocumetnType.CedulaDeCiudadania;

@@ -1,10 +1,848 @@
 <div class="body">
   <h1 class="roboto-regular">Crear un nuevo usuario</h1>
   <div class="buttons_header">
-    <app-filled-button texto="Crear APH" />
-    <app-filled-button texto="Crear Brigadista" />
-    <app-filled-button texto="Crear usuario de Comunidad UPB" />
+    <app-filled-button
+      texto="Crear usuario APH"
+      [disabled]="disabledAph"
+      (click)="openModalAph()"
+    />
+    <app-filled-button
+      texto="Crear usuario Brigadista"
+      [disabled]="disabledBrigade"
+      (click)="openModalBrigade()"
+    />
+    <app-filled-button
+      texto="Crear usuario Comunidad UPB"
+      [disabled]="disableCommunity"
+      (click)="openModalCommunity()"
+    />
   </div>
+
+  <!-- Formulario para crear un aph -->
+  @if (modalAph) {
+    <section id="aph">
+      <div class="grid">
+        <div class="box roboto-regular">
+          <h1 class="roboto-regular">Información esencial</h1>
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="names" class="form-label roboto-regular"
+                >Nombres</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="names"
+                [formControl]="namesAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="last_names" class="form-label roboto-regular"
+                >Apellidos</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="last_names"
+                [formControl]="last_namesAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="mail" class="form-label roboto-regular"
+                >Correo electrónico</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="mail"
+                [formControl]="mailAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="password" class="form-label roboto-regular"
+                >Contraseña</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                [formControl]="passwordAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="phone_number" class="form-label roboto-regular"
+                >Numero de teléfono</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="phone_number"
+                [formControl]="phone_numberAph"
+              />
+            </div>
+            <div
+              class="inputs_box"
+              style="flex-direction: row; align-items: center; gap: 20px"
+            >
+              <label for="in_service" class="form-label roboto-regular"
+                >El brigadista esta en servicio</label
+              >
+              <input
+                style="width: 20px; height: 20px"
+                type="checkbox"
+                class="form-control"
+                id="in_service"
+                [formControl]="in_serviceAph"
+              />
+            </div>
+          </div>
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="quadrant" class="form-label roboto-regular"
+                >Cuadrante asignado</label
+              >
+              <select
+                class="form-control"
+                id="quadrant"
+                [formControl]="quadrantAph"
+              >
+                <option [value]="Quadrant.Division_1">Cuadrante 1</option>
+                <option [value]="Quadrant.Division_2">Cuadrante 2</option>
+                <option [value]="Quadrant.Division_3">Cuadrante 3</option>
+                <option [value]="Quadrant.Division_4">Cuadrante 4</option>
+                <option [value]="Quadrant.Division_5">Cuadrante 5</option>
+                <option [value]="Quadrant.Division_6">Cuadrante 6</option>
+                <option [value]="Quadrant.Division_7">Cuadrante 7</option>
+              </select>
+            </div>
+            <div class="inputs_box">
+              <label
+                for="relationshipWithTheUniversity"
+                class="form-label roboto-regular"
+                >Relación con la universidad</label
+              >
+              <select
+                class="form-control"
+                id="relationshipWithTheUniversity"
+                [formControl]="relationshipWithTheUniversityAph"
+              >
+                <option [value]="RelationshipWithTheUniversity.universitary">
+                  Universitario
+                </option>
+                <option [value]="RelationshipWithTheUniversity.estudent">
+                  Estudiante
+                </option>
+                <option [value]="RelationshipWithTheUniversity.professor">
+                  Profesor
+                </option>
+                <option [value]="RelationshipWithTheUniversity.visitor">
+                  Visitante
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <h1 class="roboto-regular">Detalles del usuario</h1>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="idUniversity" class="form-label roboto-regular"
+                >Id universitario</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="idUniversity"
+                [formControl]="idUniversityAph"
+              />
+            </div>
+
+            <div class="inputs_box">
+              <label for="documentType" class="form-label roboto-regular"
+                >Tipo de documento</label
+              >
+              <select
+                class="form-control"
+                id="documentType"
+                [formControl]="documentTypeAph"
+              >
+                <option [value]="DocumetnType.CedulaDeCiudadania">
+                  Cédula de ciudadanía
+                </option>
+                <option [value]="DocumetnType.TarjetDeIdentidad">
+                  Tarjeta de identidad
+                </option>
+                <option [value]="DocumetnType.CedulaDeExtranjeria">
+                  Cédula de extranjería
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="documentNumber" class="form-label roboto-regular"
+                >Número de documento</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="documentNumber"
+                [formControl]="documentNumberAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="address" class="form-label roboto-regular"
+                >Dirección de residencia</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="address"
+                [formControl]="addressAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label
+                for="emergencyContactPhoneNumber"
+                class="form-label roboto-regular"
+                >Número de teléfono para contacto de emergencia</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="emergencyContactPhoneNumber"
+                [formControl]="emergencyContactPhoneNumberAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="birthday" class="form-label roboto-regular"
+                >Fecha de nacimiento</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="birthday"
+                [formControl]="birthdayAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="bloodType" class="form-label roboto-regular"
+                >Tipo de sangre</label
+              >
+              <select
+                class="form-control"
+                id="bloodType"
+                [formControl]="bloodTypeAph"
+              >
+                <option [value]="BloodType.A_POS">A+</option>
+                <option [value]="BloodType.O_POS">O+</option>
+                <option [value]="BloodType.B_POS">B+</option>
+                <option [value]="BloodType.AB_POS">AB+</option>
+                <option [value]="BloodType.A_NEG">A-</option>
+                <option [value]="BloodType.O_NEG">O-</option>
+                <option [value]="BloodType.B_NEG">B-</option>
+                <option [value]="BloodType.AB_NEG">AB-</option>
+              </select>
+            </div>
+            <div class="inputs_box">
+              <label for="allergies" class="form-label roboto-regular"
+                >Alergias</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="allergies"
+                [formControl]="allergiesAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label
+                for="dependentMedications"
+                class="form-label roboto-regular"
+                >Dependencia de medicamentos</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="dependentMedications"
+                [formControl]="dependentMedicationsAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="disabilities" class="form-label roboto-regular"
+                >Discapacidad</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="disabilities"
+                [formControl]="disabilitiesAph"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="buttons_footer">
+        <app-filled-button-2 texto="Cancelar" (click)="closeModalAph()" />
+        <app-filled-button texto="Crear" (click)="createAph()" />
+      </div>
+    </section>
+  }
+
+  <!-- Formulario para crear un Brigadista -->
+  @if (modalBrigade) {
+    <section>
+      <div class="grid">
+        <div class="box roboto-regular">
+          <h1 class="roboto-regular">Información esencial</h1>
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="names" class="form-label roboto-regular"
+              >Nombres</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="names"
+                [formControl]="namesAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="last_names" class="form-label roboto-regular"
+              >Apellidos</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="last_names"
+                [formControl]="last_namesAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="mail" class="form-label roboto-regular"
+              >Correo electrónico</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="mail"
+                [formControl]="mailAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="password" class="form-label roboto-regular"
+              >Contraseña</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                [formControl]="passwordAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="phone_number" class="form-label roboto-regular"
+              >Numero de teléfono</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="phone_number"
+                [formControl]="phone_numberAph"
+              />
+            </div>
+            <div
+              class="inputs_box"
+              style="flex-direction: row; align-items: center; gap: 20px"
+            >
+              <label for="in_service" class="form-label roboto-regular"
+              >El brigadista esta en servicio</label
+              >
+              <input
+                style="width: 20px; height: 20px"
+                type="checkbox"
+                class="form-control"
+                id="in_service"
+                [formControl]="in_serviceAph"
+              />
+            </div>
+          </div>
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="quadrant" class="form-label roboto-regular"
+              >Cuadrante asignado</label
+              >
+              <select
+                class="form-control"
+                id="quadrant"
+                [formControl]="quadrantAph"
+              >
+                <option [value]="Quadrant.Division_1">Cuadrante 1</option>
+                <option [value]="Quadrant.Division_2">Cuadrante 2</option>
+                <option [value]="Quadrant.Division_3">Cuadrante 3</option>
+                <option [value]="Quadrant.Division_4">Cuadrante 4</option>
+                <option [value]="Quadrant.Division_5">Cuadrante 5</option>
+                <option [value]="Quadrant.Division_6">Cuadrante 6</option>
+                <option [value]="Quadrant.Division_7">Cuadrante 7</option>
+              </select>
+            </div>
+            <div class="inputs_box">
+              <label
+                for="relationshipWithTheUniversity"
+                class="form-label roboto-regular"
+              >Relación con la universidad</label
+              >
+              <select
+                class="form-control"
+                id="relationshipWithTheUniversity"
+                [formControl]="relationshipWithTheUniversityAph"
+              >
+                <option [value]="RelationshipWithTheUniversity.universitary">
+                  Universitario
+                </option>
+                <option [value]="RelationshipWithTheUniversity.estudent">
+                  Estudiante
+                </option>
+                <option [value]="RelationshipWithTheUniversity.professor">
+                  Profesor
+                </option>
+                <option [value]="RelationshipWithTheUniversity.visitor">
+                  Visitante
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <h1 class="roboto-regular">Detalles del usuario</h1>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="idUniversity" class="form-label roboto-regular"
+              >Id universitario</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="idUniversity"
+                [formControl]="idUniversityAph"
+              />
+            </div>
+
+            <div class="inputs_box">
+              <label for="documentType" class="form-label roboto-regular"
+              >Tipo de documento</label
+              >
+              <select
+                class="form-control"
+                id="documentType"
+                [formControl]="documentTypeAph"
+              >
+                <option [value]="DocumetnType.CedulaDeCiudadania">
+                  Cédula de ciudadanía
+                </option>
+                <option [value]="DocumetnType.TarjetDeIdentidad">
+                  Tarjeta de identidad
+                </option>
+                <option [value]="DocumetnType.CedulaDeExtranjeria">
+                  Cédula de extranjería
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="documentNumber" class="form-label roboto-regular"
+              >Número de documento</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="documentNumber"
+                [formControl]="documentNumberAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="address" class="form-label roboto-regular"
+              >Dirección de residencia</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="address"
+                [formControl]="addressAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label
+                for="emergencyContactPhoneNumber"
+                class="form-label roboto-regular"
+              >Número de teléfono para contacto de emergencia</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="emergencyContactPhoneNumber"
+                [formControl]="emergencyContactPhoneNumberAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="birthday" class="form-label roboto-regular"
+              >Fecha de nacimiento</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="birthday"
+                [formControl]="birthdayAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="bloodType" class="form-label roboto-regular"
+              >Tipo de sangre</label
+              >
+              <select
+                class="form-control"
+                id="bloodType"
+                [formControl]="bloodTypeAph"
+              >
+                <option [value]="BloodType.A_POS">A+</option>
+                <option [value]="BloodType.O_POS">O+</option>
+                <option [value]="BloodType.B_POS">B+</option>
+                <option [value]="BloodType.AB_POS">AB+</option>
+                <option [value]="BloodType.A_NEG">A-</option>
+                <option [value]="BloodType.O_NEG">O-</option>
+                <option [value]="BloodType.B_NEG">B-</option>
+                <option [value]="BloodType.AB_NEG">AB-</option>
+              </select>
+            </div>
+            <div class="inputs_box">
+              <label for="allergies" class="form-label roboto-regular"
+              >Alergias</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="allergies"
+                [formControl]="allergiesAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label
+                for="dependentMedications"
+                class="form-label roboto-regular"
+              >Dependencia de medicamentos</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="dependentMedications"
+                [formControl]="dependentMedicationsAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="disabilities" class="form-label roboto-regular"
+              >Discapacidad</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="disabilities"
+                [formControl]="disabilitiesAph"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="buttons_footer">
+        <app-filled-button-2 texto="Cancelar" (click)="closeModalBrigade()" />
+        <app-filled-button texto="Crear" (click)="createBrigade()" />
+      </div>
+    </section>
+  }
+
+  <!-- Formulario para crear un Comunidad -->
+  @if (modalCommunity) {
+    <section>
+      <div class="grid">
+        <div class="box roboto-regular">
+          <h1 class="roboto-regular">Información esencial</h1>
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="names" class="form-label roboto-regular"
+              >Nombres</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="names"
+                [formControl]="namesAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="last_names" class="form-label roboto-regular"
+              >Apellidos</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="last_names"
+                [formControl]="last_namesAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="mail" class="form-label roboto-regular"
+              >Correo electrónico</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="mail"
+                [formControl]="mailAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="password" class="form-label roboto-regular"
+              >Contraseña</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                [formControl]="passwordAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="phone_number" class="form-label roboto-regular"
+              >Numero de teléfono</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="phone_number"
+                [formControl]="phone_numberAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label
+                for="relationshipWithTheUniversity"
+                class="form-label roboto-regular"
+              >Relación con la universidad</label
+              >
+              <select
+                class="form-control"
+                id="relationshipWithTheUniversity"
+                [formControl]="relationshipWithTheUniversityAph"
+              >
+                <option [value]="RelationshipWithTheUniversity.universitary">
+                  Universitario
+                </option>
+                <option [value]="RelationshipWithTheUniversity.estudent">
+                  Estudiante
+                </option>
+                <option [value]="RelationshipWithTheUniversity.professor">
+                  Profesor
+                </option>
+                <option [value]="RelationshipWithTheUniversity.visitor">
+                  Visitante
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <h1 class="roboto-regular">Detalles del usuario</h1>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="idUniversity" class="form-label roboto-regular"
+              >Id universitario</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="idUniversity"
+                [formControl]="idUniversityAph"
+              />
+            </div>
+
+            <div class="inputs_box">
+              <label for="documentType" class="form-label roboto-regular"
+              >Tipo de documento</label
+              >
+              <select
+                class="form-control"
+                id="documentType"
+                [formControl]="documentTypeAph"
+              >
+                <option [value]="DocumetnType.CedulaDeCiudadania">
+                  Cédula de ciudadanía
+                </option>
+                <option [value]="DocumetnType.TarjetDeIdentidad">
+                  Tarjeta de identidad
+                </option>
+                <option [value]="DocumetnType.CedulaDeExtranjeria">
+                  Cédula de extranjería
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="documentNumber" class="form-label roboto-regular"
+              >Número de documento</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="documentNumber"
+                [formControl]="documentNumberAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="address" class="form-label roboto-regular"
+              >Dirección de residencia</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="address"
+                [formControl]="addressAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label
+                for="emergencyContactPhoneNumber"
+                class="form-label roboto-regular"
+              >Número de teléfono para contacto de emergencia</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="emergencyContactPhoneNumber"
+                [formControl]="emergencyContactPhoneNumberAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="birthday" class="form-label roboto-regular"
+              >Fecha de nacimiento</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="birthday"
+                [formControl]="birthdayAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label for="bloodType" class="form-label roboto-regular"
+              >Tipo de sangre</label
+              >
+              <select
+                class="form-control"
+                id="bloodType"
+                [formControl]="bloodTypeAph"
+              >
+                <option [value]="BloodType.A_POS">A+</option>
+                <option [value]="BloodType.O_POS">O+</option>
+                <option [value]="BloodType.B_POS">B+</option>
+                <option [value]="BloodType.AB_POS">AB+</option>
+                <option [value]="BloodType.A_NEG">A-</option>
+                <option [value]="BloodType.O_NEG">O-</option>
+                <option [value]="BloodType.B_NEG">B-</option>
+                <option [value]="BloodType.AB_NEG">AB-</option>
+              </select>
+            </div>
+            <div class="inputs_box">
+              <label for="allergies" class="form-label roboto-regular"
+              >Alergias</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="allergies"
+                [formControl]="allergiesAph"
+              />
+            </div>
+          </div>
+
+          <div class="inputs_box_doble">
+            <div class="inputs_box">
+              <label
+                for="dependentMedications"
+                class="form-label roboto-regular"
+              >Dependencia de medicamentos</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="dependentMedications"
+                [formControl]="dependentMedicationsAph"
+              />
+            </div>
+            <div class="inputs_box">
+              <label for="disabilities" class="form-label roboto-regular"
+              >Discapacidad</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="disabilities"
+                [formControl]="disabilitiesAph"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="buttons_footer">
+        <app-filled-button-2 texto="Cancelar" (click)="closeModalCommunity()" />
+        <app-filled-button texto="Crear" (click)="createCommunity()" />
+      </div>
+    </section>
+  }
 
   <h1 class="roboto-regular">APH</h1>
   <section>
