@@ -13,6 +13,7 @@ import {
 } from '../../models/community';
 import { it } from 'node:test';
 import { BrigadierModel } from '../../models/brigadier';
+import { plainToClass } from 'class-transformer';
 
 @Component({
   selector: 'app-table-upb-community',
@@ -57,13 +58,13 @@ import { BrigadierModel } from '../../models/brigadier';
     <div class="scroll_table">
       <table>
         <thead>
-        <tr class="roboto-regular">
-          <td class="start"><h4>Nombres</h4></td>
-          <td><h4>Apellidos</h4></td>
-          <td><h4>Correo electrónico</h4></td>
-          <td><h4>Numero de teléfono</h4></td>
-          <td class="end"><h4>Acciones</h4></td>
-        </tr>
+          <tr class="roboto-regular">
+            <td class="start"><h4>Nombres</h4></td>
+            <td><h4>Apellidos</h4></td>
+            <td><h4>Correo electrónico</h4></td>
+            <td><h4>Numero de teléfono</h4></td>
+            <td class="end"><h4>Acciones</h4></td>
+          </tr>
         </thead>
         <tbody class="roboto-regular">
           @for (item of paginated; track item.id) {
@@ -90,7 +91,10 @@ import { BrigadierModel } from '../../models/brigadier';
                     texto="Actualizar"
                     (click)="openModalUpdateCommunity(item)"
                   />
-                  <app-filled-button-2 texto="Ver" (click)="openModalViewCommunity(item)"/>
+                  <app-filled-button-2
+                    texto="Ver"
+                    (click)="openModalViewCommunity(item)"
+                  />
                 </div>
               </td>
             </tr>
@@ -124,7 +128,7 @@ import { BrigadierModel } from '../../models/brigadier';
               texto="Cancelar"
               (click)="closeModalDeleteCommunity()"
             />
-            <app-filled-button texto="Aceptar" (click)="deleteCommunity()"/>
+            <app-filled-button texto="Aceptar" (click)="deleteCommunity()" />
           </div>
         </div>
       </div>
@@ -141,7 +145,7 @@ import { BrigadierModel } from '../../models/brigadier';
               <div class="inputs_box_doble">
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Nombres</label
+                    >Nombres</label
                   >
                   <input
                     type="text"
@@ -152,7 +156,7 @@ import { BrigadierModel } from '../../models/brigadier';
                 </div>
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Apellidos</label
+                    >Apellidos</label
                   >
                   <input
                     type="text"
@@ -166,7 +170,7 @@ import { BrigadierModel } from '../../models/brigadier';
               <div class="inputs_box_doble">
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Correo electrónico</label
+                    >Correo electrónico</label
                   >
                   <input
                     type="email"
@@ -177,7 +181,7 @@ import { BrigadierModel } from '../../models/brigadier';
                 </div>
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Numero de teléfono</label
+                    >Numero de teléfono</label
                   >
                   <input
                     type="text"
@@ -190,7 +194,7 @@ import { BrigadierModel } from '../../models/brigadier';
 
               <div class="inputs_box">
                 <label for="mail" class="form-label roboto-regular"
-                >Relación con la universidad</label
+                  >Relación con la universidad</label
                 >
                 <select
                   class="form-control"
@@ -217,7 +221,7 @@ import { BrigadierModel } from '../../models/brigadier';
               <div class="inputs_box_doble">
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Id universitario</label
+                    >Id universitario</label
                   >
                   <input
                     type="text"
@@ -229,7 +233,7 @@ import { BrigadierModel } from '../../models/brigadier';
 
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Tipo de documento</label
+                    >Tipo de documento</label
                   >
                   <select
                     class="form-control"
@@ -252,7 +256,7 @@ import { BrigadierModel } from '../../models/brigadier';
               <div class="inputs_box_doble">
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Número de documento</label
+                    >Número de documento</label
                   >
                   <input
                     type="text"
@@ -263,7 +267,7 @@ import { BrigadierModel } from '../../models/brigadier';
                 </div>
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Dirección de residencia</label
+                    >Dirección de residencia</label
                   >
                   <input
                     type="text"
@@ -277,7 +281,7 @@ import { BrigadierModel } from '../../models/brigadier';
               <div class="inputs_box_doble">
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Número de teléfono para contacto de emergencia</label
+                    >Número de teléfono para contacto de emergencia</label
                   >
                   <input
                     type="text"
@@ -288,7 +292,7 @@ import { BrigadierModel } from '../../models/brigadier';
                 </div>
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Fecha de nacimiento</label
+                    >Fecha de nacimiento</label
                   >
                   <input
                     type="date"
@@ -302,7 +306,7 @@ import { BrigadierModel } from '../../models/brigadier';
               <div class="inputs_box_doble">
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Tipo de sangre</label
+                    >Tipo de sangre</label
                   >
                   <select
                     class="form-control"
@@ -321,7 +325,7 @@ import { BrigadierModel } from '../../models/brigadier';
                 </div>
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Alergias</label
+                    >Alergias</label
                   >
                   <input
                     type="text"
@@ -335,7 +339,7 @@ import { BrigadierModel } from '../../models/brigadier';
               <div class="inputs_box_doble">
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Dependencia de medicamentos</label
+                    >Dependencia de medicamentos</label
                   >
                   <input
                     type="text"
@@ -346,7 +350,7 @@ import { BrigadierModel } from '../../models/brigadier';
                 </div>
                 <div class="inputs_box">
                   <label for="mail" class="form-label roboto-regular"
-                  >Discapacidad</label
+                    >Discapacidad</label
                   >
                   <input
                     type="text"
@@ -426,7 +430,11 @@ import { BrigadierModel } from '../../models/brigadier';
               </div>
               <div class="box_info">
                 <h5>Número de teléfono para contacto de emergencia</h5>
-                <p>{{ itemCommunityView.userDetails.emergencyContactPhoneNumber }}</p>
+                <p>
+                  {{
+                    itemCommunityView.userDetails.emergencyContactPhoneNumber
+                  }}
+                </p>
               </div>
               <div class="box_info">
                 <h5>Fecha de nacimiento</h5>
@@ -448,7 +456,6 @@ import { BrigadierModel } from '../../models/brigadier';
                 <h5>Discapacidad</h5>
                 <p>{{ itemCommunityView.userDetails.disabilities }}</p>
               </div>
-
             </div>
           </div>
         </div>
@@ -708,7 +715,9 @@ export class TableUpbCommunityComponent implements OnInit {
 
   LlenarDatos(): void {
     this.communityUpbService.getAll().subscribe((data) => {
-      this.items = data;
+      this.items = data.map((value: CommunityModel) =>
+        plainToClass(CommunityModel, value),
+      );
       this.Ordenar();
       this.updatePagination();
       console.log('tamaño', this.items.length);
@@ -802,7 +811,7 @@ export class TableUpbCommunityComponent implements OnInit {
   // Datos del formulario
   names = new FormControl('');
   last_names = new FormControl('');
-  mail = new FormControl({value: '', disabled: true});
+  mail = new FormControl({ value: '', disabled: true });
   phone_number = new FormControl('');
   relationshipWithTheUniversity = new FormControl('');
 
@@ -952,7 +961,7 @@ export class TableUpbCommunityComponent implements OnInit {
     this.statusModalView = true;
   }
 
-  closeModalViewCommunity(){
+  closeModalViewCommunity() {
     this.statusModalView = false;
   }
 

@@ -37,4 +37,20 @@ export class BrigadierService {
       },
     );
   }
+
+  deleteById(id: string) {
+    return this.http.delete<any>(environment.urlApi + `/brigadiers/${id}`, {
+      headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+    });
+  }
+
+  putById(data: BrigadierModel) {
+    return this.http.put<BrigadierModel>(
+      environment.urlApi + `/brigadiers/${data.id}`,
+      data,
+      {
+        headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+      },
+    );
+  }
 }

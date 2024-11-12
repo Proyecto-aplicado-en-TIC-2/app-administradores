@@ -1,3 +1,6 @@
+import { RelationshipWithTheUniversity, UserDetails } from './community';
+import { Quadrant } from './full-report-model';
+
 export class BrigadierModel {
   public partition_key: string = '';
   public id: string = '';
@@ -5,8 +8,10 @@ export class BrigadierModel {
   public last_names: string = '';
   public mail: string = '';
   public phone_number: string = '';
-  public relationship_with_the_university: string = '';
+  public relationshipWithTheUniversity: RelationshipWithTheUniversity =
+    RelationshipWithTheUniversity.estudent;
   public in_service: boolean = false;
-  public quadrant: string = '';
+  public quadrant: Quadrant = Quadrant.Division_1;
+  public userDetails: UserDetails = new UserDetails();
   public _ts: number = 0;
 }

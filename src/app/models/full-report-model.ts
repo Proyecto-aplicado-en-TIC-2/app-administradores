@@ -37,7 +37,7 @@ class date {
 }
 
 class Location {
-  public quadrant: Quadrant = 0;
+  public quadrant: Quadrant = Quadrant.Division_1;
   public block: Block = 0;
   public classroom: string = '';
   public pointOfReference: string = '';
@@ -112,13 +112,13 @@ export enum FollowUp {
 }
 
 export enum Quadrant {
-  'Division-1',
-  'Division-2',
-  'Division-3',
-  'Division-4',
-  'Division-5',
-  'Division-6',
-  'Division-7',
+  Division_1 = 'Division-1',
+  Division_2 = 'Division-2',
+  Division_3 = 'Division-3',
+  Division_4 = 'Division-4',
+  Division_5 = 'Division-5',
+  Division_6 = 'Division-6',
+  Division_7 = 'Division-7',
 }
 
 export enum EquipmentType {

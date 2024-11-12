@@ -11,7 +11,7 @@ export class CommunityModel {
   public _ts: number = 0;
 }
 
-class UserDetails {
+export class UserDetails {
   public idUniversity: string = '';
   public documentType: DocumetnType = DocumetnType.CedulaDeCiudadania;
   public documentNumber: string = '';
