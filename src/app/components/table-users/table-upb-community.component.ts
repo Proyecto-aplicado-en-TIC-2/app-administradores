@@ -57,13 +57,13 @@ import { BrigadierModel } from '../../models/brigadier';
     <div class="scroll_table">
       <table>
         <thead>
-          <tr class="roboto-regular">
-            <td class="start"><h4>Nombres</h4></td>
-            <td><h4>Apellidos</h4></td>
-            <td><h4>Correo electrónico</h4></td>
-            <td><h4>Numero de teléfono</h4></td>
-            <td class="end"><h4>Acciones</h4></td>
-          </tr>
+        <tr class="roboto-regular">
+          <td class="start"><h4>Nombres</h4></td>
+          <td><h4>Apellidos</h4></td>
+          <td><h4>Correo electrónico</h4></td>
+          <td><h4>Numero de teléfono</h4></td>
+          <td class="end"><h4>Acciones</h4></td>
+        </tr>
         </thead>
         <tbody class="roboto-regular">
           @for (item of paginated; track item.id) {
@@ -90,7 +90,7 @@ import { BrigadierModel } from '../../models/brigadier';
                     texto="Actualizar"
                     (click)="openModalUpdateCommunity(item)"
                   />
-                  <app-filled-button-2 texto="Ver" />
+                  <app-filled-button-2 texto="Ver" (click)="openModalViewCommunity(item)"/>
                 </div>
               </td>
             </tr>
@@ -124,7 +124,7 @@ import { BrigadierModel } from '../../models/brigadier';
               texto="Cancelar"
               (click)="closeModalDeleteCommunity()"
             />
-            <app-filled-button texto="Aceptar" (click)="deleteCommunity()" />
+            <app-filled-button texto="Aceptar" (click)="deleteCommunity()"/>
           </div>
         </div>
       </div>
@@ -134,225 +134,227 @@ import { BrigadierModel } from '../../models/brigadier';
     @if (statusModalUpdate) {
       <div class="modal-overlay" (click)="closeModalUpdateCommunity()"></div>
       <div class="modal-content">
-        <div class="container container_2">
-          <div class="box roboto-regular">
-            <h1 class="roboto-regular">Actualizar información</h1>
-            <div class="inputs_box_doble">
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+        <div class="scroll_container">
+          <div class="container container_2">
+            <div class="box roboto-regular">
+              <h1 class="roboto-regular">Actualizar información</h1>
+              <div class="inputs_box_doble">
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Nombres</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="names"
-                />
-              </div>
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="names"
+                  />
+                </div>
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Apellidos</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="last_names"
-                />
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="last_names"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="inputs_box_doble">
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+              <div class="inputs_box_doble">
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Correo electrónico</label
-                >
-                <input
-                  type="email"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="mail"
-                />
-              </div>
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="mail"
+                  />
+                </div>
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Numero de teléfono</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="phone_number"
-                />
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="phone_number"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="inputs_box">
-              <label for="mail" class="form-label roboto-regular"
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
                 >Relación con la universidad</label
-              >
-              <select
-                class="form-control"
-                id="relationshipWithTheUniversity"
-                [formControl]="relationshipWithTheUniversity"
-              >
-                <option [value]="RelationshipWithTheUniversity.universitary">
-                  Universitario
-                </option>
-                <option [value]="RelationshipWithTheUniversity.estudent">
-                  Estudiante
-                </option>
-                <option [value]="RelationshipWithTheUniversity.professor">
-                  Profesor
-                </option>
-                <option [value]="RelationshipWithTheUniversity.visitor">
-                  Visitante
-                </option>
-              </select>
-            </div>
+                >
+                <select
+                  class="form-control"
+                  id="relationshipWithTheUniversity"
+                  [formControl]="relationshipWithTheUniversity"
+                >
+                  <option [value]="RelationshipWithTheUniversity.universitary">
+                    Universitario
+                  </option>
+                  <option [value]="RelationshipWithTheUniversity.estudent">
+                    Estudiante
+                  </option>
+                  <option [value]="RelationshipWithTheUniversity.professor">
+                    Profesor
+                  </option>
+                  <option [value]="RelationshipWithTheUniversity.visitor">
+                    Visitante
+                  </option>
+                </select>
+              </div>
 
-            <h1 class="roboto-regular">Detalles del usuario</h1>
+              <h1 class="roboto-regular">Detalles del usuario</h1>
 
-            <div class="inputs_box_doble">
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+              <div class="inputs_box_doble">
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Id universitario</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="idUniversity"
-                />
-              </div>
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="idUniversity"
+                  />
+                </div>
 
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Tipo de documento</label
-                >
-                <select
-                  class="form-control"
-                  id="relationshipWithTheUniversity"
-                  [formControl]="documentType"
-                >
-                  <option [value]="DocumetnType.CedulaDeCiudadania">
-                    Cédula de ciudadanía
-                  </option>
-                  <option [value]="DocumetnType.TarjetDeIdentidad">
-                    Tarjeta de identidad
-                  </option>
-                  <option [value]="DocumetnType.CedulaDeExtranjeria">
-                    Cédula de extranjería
-                  </option>
-                </select>
+                  >
+                  <select
+                    class="form-control"
+                    id="relationshipWithTheUniversity"
+                    [formControl]="documentType"
+                  >
+                    <option [value]="DocumetnType.CedulaDeCiudadania">
+                      Cédula de ciudadanía
+                    </option>
+                    <option [value]="DocumetnType.TarjetDeIdentidad">
+                      Tarjeta de identidad
+                    </option>
+                    <option [value]="DocumetnType.CedulaDeExtranjeria">
+                      Cédula de extranjería
+                    </option>
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <div class="inputs_box_doble">
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+              <div class="inputs_box_doble">
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Número de documento</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="documentNumber"
-                />
-              </div>
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="documentNumber"
+                  />
+                </div>
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Dirección de residencia</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="address"
-                />
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="address"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="inputs_box_doble">
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+              <div class="inputs_box_doble">
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Número de teléfono para contacto de emergencia</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="emergencyContactPhoneNumber"
-                />
-              </div>
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="emergencyContactPhoneNumber"
+                  />
+                </div>
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Fecha de nacimiento</label
-                >
-                <input
-                  type="date"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="birthday"
-                />
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="birthday"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="inputs_box_doble">
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+              <div class="inputs_box_doble">
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Tipo de sangre</label
-                >
-                <select
-                  class="form-control"
-                  id="relationshipWithTheUniversity"
-                  [formControl]="bloodType"
-                >
-                  <option [value]="BloodType.A_POS">A+</option>
-                  <option [value]="BloodType.O_POS">O+</option>
-                  <option [value]="BloodType.B_POS">B+</option>
-                  <option [value]="BloodType.AB_POS">AB+</option>
-                  <option [value]="BloodType.A_NEG">A-</option>
-                  <option [value]="BloodType.O_NEG">O-</option>
-                  <option [value]="BloodType.B_NEG">B-</option>
-                  <option [value]="BloodType.AB_NEG">AB-</option>
-                </select>
-              </div>
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+                  >
+                  <select
+                    class="form-control"
+                    id="relationshipWithTheUniversity"
+                    [formControl]="bloodType"
+                  >
+                    <option [value]="BloodType.A_POS">A+</option>
+                    <option [value]="BloodType.O_POS">O+</option>
+                    <option [value]="BloodType.B_POS">B+</option>
+                    <option [value]="BloodType.AB_POS">AB+</option>
+                    <option [value]="BloodType.A_NEG">A-</option>
+                    <option [value]="BloodType.O_NEG">O-</option>
+                    <option [value]="BloodType.B_NEG">B-</option>
+                    <option [value]="BloodType.AB_NEG">AB-</option>
+                  </select>
+                </div>
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Alergias</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="allergies"
-                />
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="allergies"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="inputs_box_doble">
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+              <div class="inputs_box_doble">
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Dependencia de medicamentos</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="dependentMedications"
-                />
-              </div>
-              <div class="inputs_box">
-                <label for="mail" class="form-label roboto-regular"
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="dependentMedications"
+                  />
+                </div>
+                <div class="inputs_box">
+                  <label for="mail" class="form-label roboto-regular"
                   >Discapacidad</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mail"
-                  [formControl]="disabilities"
-                />
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="mail"
+                    [formControl]="disabilities"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -365,6 +367,95 @@ import { BrigadierModel } from '../../models/brigadier';
           <app-filled-button
             texto="Actualizar datos"
             (click)="updateCommunity()"
+          />
+        </div>
+      </div>
+    }
+
+    <!-- Modal de para actualizar -->
+    @if (statusModalView) {
+      <div class="modal-overlay" (click)="closeModalViewCommunity()"></div>
+      <div class="modal-content">
+        <div class="scroll_container">
+          <div class="container container_2">
+            <div class="box roboto-regular">
+              <h1 class="roboto-regular">Información del usuario</h1>
+              <div class="box_info">
+                <h5>Nombres</h5>
+                <p>{{ itemCommunityView.names }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Apellidos</h5>
+                <p>{{ itemCommunityView.last_names }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Correo electrónico</h5>
+                <p>{{ itemCommunityView.mail }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Numero de teléfono</h5>
+                <p>{{ itemCommunityView.phone_number }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Relación con la universidad</h5>
+                <p>{{ itemCommunityView.relationshipWithTheUniversity }}</p>
+              </div>
+
+              <h2 class="roboto-regular">Detalles del usuario</h2>
+
+              <div class="box_info">
+                <h5>Id universitario</h5>
+                <p>{{ itemCommunityView.userDetails.idUniversity }}</p>
+              </div>
+
+              <div class="box_info">
+                <h5>Tipo de documento</h5>
+                <p>{{ itemCommunityView.userDetails.documentType }}</p>
+              </div>
+              <div class="box_info">
+                <h5>Número de documento</h5>
+                <p>{{ itemCommunityView.userDetails.documentNumber }}</p>
+              </div>
+              <div class="box_info">
+                <h5>Dirección de residencia</h5>
+                <p>{{ itemCommunityView.userDetails.address }}</p>
+              </div>
+              <div class="box_info">
+                <h5>Número de teléfono para contacto de emergencia</h5>
+                <p>{{ itemCommunityView.userDetails.emergencyContactPhoneNumber }}</p>
+              </div>
+              <div class="box_info">
+                <h5>Fecha de nacimiento</h5>
+                <p>{{ itemCommunityView.userDetails.birthday }}</p>
+              </div>
+              <div class="box_info">
+                <h5>Tipo de sangre</h5>
+                <p>{{ itemCommunityView.userDetails.bloodType }}</p>
+              </div>
+              <div class="box_info">
+                <h5>Alergias</h5>
+                <p>{{ itemCommunityView.userDetails.allergies }}</p>
+              </div>
+              <div class="box_info">
+                <h5>Dependencia de medicamentos</h5>
+                <p>{{ itemCommunityView.userDetails.dependentMedications }}</p>
+              </div>
+              <div class="box_info">
+                <h5>Discapacidad</h5>
+                <p>{{ itemCommunityView.userDetails.disabilities }}</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="buttons_footer">
+          <app-filled-button-2
+            texto="Cerrar"
+            (click)="closeModalViewCommunity()"
           />
         </div>
       </div>
@@ -855,8 +946,14 @@ export class TableUpbCommunityComponent implements OnInit {
   statusModalView = false;
   itemCommunityView = new CommunityModel();
 
-  openModal(item: CommunityModel) {
+  openModalViewCommunity(item: CommunityModel) {
     // Modal para actualizar uno de la comunidad
+    this.itemCommunityView = item;
+    this.statusModalView = true;
+  }
+
+  closeModalViewCommunity(){
+    this.statusModalView = false;
   }
 
   protected readonly RelationshipWithTheUniversity =
