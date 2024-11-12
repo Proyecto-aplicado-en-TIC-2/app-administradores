@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FilledButtonComponent } from '../filled-button/filled-button.component';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
 import { FilledButtonComponent2 } from '../filled-button/filled-button-2.component';
 import { LoginService } from '../../service/login.service';
 import { CommunityUpbService } from '../../service/community-upb.service';
-import { CommunityModel } from '../../models/community';
+import {
+  BloodType,
+  CommunityModel,
+  DocumetnType,
+  RelationshipWithTheUniversity,
+} from '../../models/community';
+import { it } from 'node:test';
+import { BrigadierModel } from '../../models/brigadier';
 
 @Component({
   selector: 'app-table-upb-community',
@@ -15,6 +22,7 @@ import { CommunityModel } from '../../models/community';
     FormsModule,
     NgForOf,
     FilledButtonComponent2,
+    ReactiveFormsModule,
   ],
   template: `
     <!-- Botones de paginación -->
@@ -78,7 +86,10 @@ import { CommunityModel } from '../../models/community';
                     texto="Eliminar"
                     (click)="openModalDeleteCommunity(item)"
                   />
-                  <app-filled-button-2 texto="Actualizar" />
+                  <app-filled-button-2
+                    texto="Actualizar"
+                    (click)="openModalUpdateCommunity(item)"
+                  />
                   <app-filled-button-2 texto="Ver" />
                 </div>
               </td>
@@ -90,7 +101,7 @@ import { CommunityModel } from '../../models/community';
       </table>
     </div>
 
-    <!--Modal de confirmacion-->
+    <!--Modal de confirmación para eliminar-->
     @if (statusModalDelete) {
       <div
         class="modal-overlay-delete-modal"
@@ -115,6 +126,246 @@ import { CommunityModel } from '../../models/community';
             />
             <app-filled-button texto="Aceptar" (click)="deleteCommunity()" />
           </div>
+        </div>
+      </div>
+    }
+
+    <!-- Modal de para actualizar -->
+    @if (statusModalUpdate) {
+      <div class="modal-overlay" (click)="closeModalUpdateCommunity()"></div>
+      <div class="modal-content">
+        <div class="container container_2">
+          <div class="box roboto-regular">
+            <h1 class="roboto-regular">Actualizar información</h1>
+            <div class="inputs_box_doble">
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Nombres</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="names"
+                />
+              </div>
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Apellidos</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="last_names"
+                />
+              </div>
+            </div>
+
+            <div class="inputs_box_doble">
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Correo electrónico</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="mail"
+                />
+              </div>
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Numero de teléfono</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="phone_number"
+                />
+              </div>
+            </div>
+
+            <div class="inputs_box">
+              <label for="mail" class="form-label roboto-regular"
+                >Relación con la universidad</label
+              >
+              <select
+                class="form-control"
+                id="relationshipWithTheUniversity"
+                [formControl]="relationshipWithTheUniversity"
+              >
+                <option [value]="RelationshipWithTheUniversity.universitary">
+                  Universitario
+                </option>
+                <option [value]="RelationshipWithTheUniversity.estudent">
+                  Estudiante
+                </option>
+                <option [value]="RelationshipWithTheUniversity.professor">
+                  Profesor
+                </option>
+                <option [value]="RelationshipWithTheUniversity.visitor">
+                  Visitante
+                </option>
+              </select>
+            </div>
+
+            <h1 class="roboto-regular">Detalles del usuario</h1>
+
+            <div class="inputs_box_doble">
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Id universitario</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="idUniversity"
+                />
+              </div>
+
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Tipo de documento</label
+                >
+                <select
+                  class="form-control"
+                  id="relationshipWithTheUniversity"
+                  [formControl]="documentType"
+                >
+                  <option [value]="DocumetnType.CedulaDeCiudadania">
+                    Cédula de ciudadanía
+                  </option>
+                  <option [value]="DocumetnType.TarjetDeIdentidad">
+                    Tarjeta de identidad
+                  </option>
+                  <option [value]="DocumetnType.CedulaDeExtranjeria">
+                    Cédula de extranjería
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="inputs_box_doble">
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Número de documento</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="documentNumber"
+                />
+              </div>
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Dirección de residencia</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="address"
+                />
+              </div>
+            </div>
+
+            <div class="inputs_box_doble">
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Número de teléfono para contacto de emergencia</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="emergencyContactPhoneNumber"
+                />
+              </div>
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Fecha de nacimiento</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="birthday"
+                />
+              </div>
+            </div>
+
+            <div class="inputs_box_doble">
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Tipo de sangre</label
+                >
+                <select
+                  class="form-control"
+                  id="relationshipWithTheUniversity"
+                  [formControl]="bloodType"
+                >
+                  <option [value]="BloodType.A_POS">A+</option>
+                  <option [value]="BloodType.O_POS">O+</option>
+                  <option [value]="BloodType.B_POS">B+</option>
+                  <option [value]="BloodType.AB_POS">AB+</option>
+                  <option [value]="BloodType.A_NEG">A-</option>
+                  <option [value]="BloodType.O_NEG">O-</option>
+                  <option [value]="BloodType.B_NEG">B-</option>
+                  <option [value]="BloodType.AB_NEG">AB-</option>
+                </select>
+              </div>
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Alergias</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="allergies"
+                />
+              </div>
+            </div>
+
+            <div class="inputs_box_doble">
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Dependencia de medicamentos</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="dependentMedications"
+                />
+              </div>
+              <div class="inputs_box">
+                <label for="mail" class="form-label roboto-regular"
+                  >Discapacidad</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mail"
+                  [formControl]="disabilities"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="buttons_footer">
+          <app-filled-button-2
+            texto="Cerrar"
+            (click)="closeModalUpdateCommunity()"
+          />
+          <app-filled-button
+            texto="Actualizar datos"
+            (click)="updateCommunity()"
+          />
         </div>
       </div>
     }
@@ -152,7 +403,6 @@ import { CommunityModel } from '../../models/community';
           color: var(--md-sys-color-on-surface-variant);
           margin: 0;
           padding: 7px 15px;
-          width: max-content;
         }
 
         tr {
@@ -181,6 +431,28 @@ import { CommunityModel } from '../../models/community';
             margin: 0;
           }
 
+          .description {
+            width: 300px;
+            max-height: 2.5em;
+            overflow: hidden;
+            transition: max-height 1s ease-in;
+          }
+
+          .description:before {
+            max-height: 2.5em;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+          }
+
+          .description:hover {
+            max-height: 100em;
+          }
+
+          .category {
+            display: flex;
+            justify-content: center;
+          }
+
           .buttons {
             width: max-content;
             display: flex;
@@ -188,82 +460,6 @@ import { CommunityModel } from '../../models/community';
             gap: 20px;
           }
         }
-      }
-    }
-
-    /* Estilos del modal fondo */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-
-    /* Fondo scroll modal */
-    .scroll_container {
-      overflow-y: auto;
-    }
-
-    /* Estilos del modal */
-    .modal-content {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      z-index: 1000;
-      max-width: 60%;
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-
-      .box {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        .box_info {
-          padding: 0 10px;
-        }
-
-        h1 {
-          font-size: 36px;
-        }
-
-        h3 {
-          margin: 0 10px;
-        }
-
-        h1,
-        h5,
-        p {
-          margin: 0;
-        }
-
-        p {
-          padding-top: 5px;
-        }
-      }
-
-      .container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        column-gap: 30px;
-        color: var(--md-sys-color-on-surface);
-      }
-
-      .buttons_footer {
-        display: flex;
-        flex-direction: row;
-        margin-top: 20px;
       }
     }
 
@@ -294,6 +490,111 @@ import { CommunityModel } from '../../models/community';
       margin-top: 45px;
       gap: 30px;
       justify-content: center;
+    }
+
+    /* Estilos para el modal de actualizar */
+    .box {
+      .inputs_box_doble {
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+      }
+    }
+
+    .inputs_box {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+
+      input,
+      select {
+        background: var(--md-sys-color-surface);
+        border: 2px solid var(--md-sys-color-primary);
+        border-radius: 8px;
+
+        padding: 10px 10px;
+        margin-top: 5px;
+        font-family: 'Roboto', sans-serif;
+        font-size: medium;
+      }
+    }
+
+    /* Estilos del modal fondo */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    /* Fondo scroll modal */
+    .scroll_container {
+      overflow-y: auto;
+    }
+
+    /* Estilos del modal */
+    .modal-content {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1000;
+      max-width: 60%;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+
+      .box {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .box_info {
+          padding: 0 10px;
+        }
+
+        h1 {
+          font-size: 36px;
+        }
+
+        h3 {
+          margin: 0 10px;
+        }
+
+        h1,
+        h5,
+        p {
+          margin: 0;
+        }
+
+        p {
+          padding-top: 5px;
+        }
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 30px;
+        color: var(--md-sys-color-on-surface);
+      }
+
+      .buttons_footer {
+        display: flex;
+        flex-direction: row;
+        margin-top: 20px;
+        gap: 30px;
+      }
     }
   `,
 })
@@ -402,4 +703,164 @@ export class TableUpbCommunityComponent implements OnInit {
   closeModalDeleteCommunity() {
     this.statusModalDelete = false;
   }
+
+  // Modal para actualizar uno de la comunidad
+  statusModalUpdate = false;
+  itemCommunityUpdate = new CommunityModel();
+
+  // Datos del formulario
+  names = new FormControl('');
+  last_names = new FormControl('');
+  mail = new FormControl('');
+  phone_number = new FormControl('');
+  relationshipWithTheUniversity = new FormControl('');
+
+  // Detalles del usuario
+  idUniversity = new FormControl('');
+  documentType = new FormControl('');
+  documentNumber = new FormControl('');
+  address = new FormControl('');
+  emergencyContactPhoneNumber = new FormControl('');
+  birthday = new FormControl('');
+  bloodType = new FormControl('');
+  allergies = new FormControl('');
+  dependentMedications = new FormControl('');
+  disabilities = new FormControl('');
+
+  // Eliminar un usuario
+  openModalUpdateCommunity(item: CommunityModel) {
+    this.itemCommunityUpdate = item;
+
+    console.log('Usuario que vamos a actualizar', item);
+
+    this.names.setValue(item.names ? item.names : '');
+    this.last_names.setValue(item.last_names ? item.last_names : '');
+    this.mail.setValue(item.mail ? item.mail : '');
+    this.phone_number.setValue(
+      item.phone_number ? item.phone_number.toString() : '',
+    );
+    this.relationshipWithTheUniversity.setValue(
+      item.relationshipWithTheUniversity,
+    );
+
+    // Detalles del usuario
+    this.idUniversity.setValue(
+      item.userDetails.idUniversity
+        ? item.userDetails.idUniversity.toString()
+        : '',
+    );
+    this.documentType.setValue(item.userDetails.documentType);
+    this.documentNumber.setValue(
+      item.userDetails.documentNumber
+        ? item.userDetails.documentNumber.toString()
+        : '',
+    );
+    this.address.setValue(
+      item.userDetails.address ? item.userDetails.address : '',
+    );
+    this.emergencyContactPhoneNumber.setValue(
+      item.userDetails.emergencyContactPhoneNumber
+        ? item.userDetails.emergencyContactPhoneNumber.toString()
+        : '',
+    );
+    this.birthday.setValue(
+      item.userDetails.birthday ? item.userDetails.birthday : '',
+    );
+    this.bloodType.setValue(item.userDetails.bloodType);
+    this.allergies.setValue(
+      item.userDetails.allergies ? item.userDetails.allergies : '',
+    );
+    this.dependentMedications.setValue(
+      item.userDetails.dependentMedications
+        ? item.userDetails.dependentMedications
+        : '',
+    );
+    this.disabilities.setValue(
+      item.userDetails.disabilities ? item.userDetails.disabilities : '',
+    );
+
+    // abrir el modal
+    this.statusModalUpdate = true;
+  }
+
+  updateCommunity() {
+    // item actualizado
+    let item: CommunityModel = new CommunityModel();
+
+    // Asignar los datos del form
+    item.id = this.itemCommunityUpdate.id;
+    item.partition_key = this.itemCommunityUpdate.partition_key;
+    item.names = typeof this.names.value === 'string' ? this.names.value : '';
+    item.last_names =
+      typeof this.last_names?.value === 'string' ? this.last_names.value : '';
+    item.mail = typeof this.mail?.value === 'string' ? this.mail.value : '';
+    item.phone_number =
+      typeof this.phone_number?.value === 'string'
+        ? this.phone_number.value
+        : '';
+    item.relationshipWithTheUniversity = this.relationshipWithTheUniversity
+      .value as unknown as RelationshipWithTheUniversity;
+
+    item.userDetails.idUniversity =
+      typeof this.idUniversity?.value === 'string'
+        ? this.idUniversity.value
+        : '';
+    item.userDetails.documentType = this.documentType
+      .value as unknown as DocumetnType;
+    item.userDetails.documentNumber =
+      typeof this.documentNumber?.value === 'string'
+        ? this.documentNumber.value
+        : '';
+    item.userDetails.address =
+      typeof this.address?.value === 'string' ? this.address.value : '';
+    item.userDetails.emergencyContactPhoneNumber =
+      typeof this.emergencyContactPhoneNumber?.value === 'string'
+        ? this.emergencyContactPhoneNumber.value
+        : '';
+    item.userDetails.birthday =
+      typeof this.birthday?.value === 'string' ? this.birthday.value : '';
+    item.userDetails.bloodType = this.bloodType.value as unknown as BloodType;
+    item.userDetails.allergies =
+      typeof this.allergies?.value === 'string' ? this.allergies.value : '';
+    item.userDetails.dependentMedications =
+      typeof this.dependentMedications?.value === 'string'
+        ? this.dependentMedications.value
+        : '';
+    item.userDetails.disabilities =
+      typeof this.disabilities?.value === 'string'
+        ? this.disabilities.value
+        : '';
+
+    // Inprimimos el usuario actualizado
+    console.log('Enprimir el usuario de la communidad actualizado', item);
+    console.log(
+      'typeof this.phone_number?.value',
+      typeof this.idUniversity?.value,
+    );
+
+    // Enviamos el usuario con cambios
+    this.communityUpbService.putById(item).subscribe((value) => {
+      // cerrar el modal
+      this.closeModalUpdateCommunity();
+      this.LlenarDatos();
+    });
+  }
+
+  closeModalUpdateCommunity() {
+    this.statusModalUpdate = false;
+  }
+
+  // Modal para visualizar los datos
+
+  statusModalView = false;
+  itemCommunityView = new CommunityModel();
+
+  openModal(item: CommunityModel) {
+    // Modal para actualizar uno de la comunidad
+  }
+
+  protected readonly RelationshipWithTheUniversity =
+    RelationshipWithTheUniversity;
+  protected readonly DocumetnType = DocumetnType;
+  protected readonly BloodType = BloodType;
 }

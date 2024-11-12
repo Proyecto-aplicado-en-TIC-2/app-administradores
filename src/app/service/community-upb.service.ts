@@ -44,4 +44,14 @@ export class CommunityUpbService {
       headers: { Authorization: 'Bearer ' + this.auth.getToken() },
     });
   }
+
+  public putById(data: CommunityModel) {
+    return this.http.put<CommunityModel[]>(
+      environment.urlApi + `/community/${data.id}`,
+      data,
+      {
+        headers: { Authorization: 'Bearer ' + this.auth.getToken() },
+      },
+    );
+  }
 }

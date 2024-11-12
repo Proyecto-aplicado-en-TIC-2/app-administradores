@@ -5,17 +5,18 @@ export class CommunityModel {
   public last_names: string = '';
   public mail: string = '';
   public phone_number: string = '';
-  public relationshipWithTheUniversity: RelationshipWithTheUniversity = 0;
+  public relationshipWithTheUniversity: RelationshipWithTheUniversity =
+    RelationshipWithTheUniversity.estudent;
   public userDetails = new UserDetails();
   public _ts: number = 0;
 }
 
 class UserDetails {
-  public idUniversity: number = 0;
-  public documetnType: DocumetnType = 0;
+  public idUniversity: string = '';
+  public documentType: DocumetnType = DocumetnType.CedulaDeCiudadania;
   public documentNumber: string = '';
   public address: string = '';
-  public emergencyContactPhoneNumber: number = 0;
+  public emergencyContactPhoneNumber: string = '';
   public birthday: string = '';
   public bloodType: BloodType = BloodType.A_POS;
   public allergies: string = '';
@@ -23,25 +24,25 @@ class UserDetails {
   public disabilities: string = '';
 }
 export enum RelationshipWithTheUniversity {
-  universitary,
-  estudent,
-  professor,
-  visitor,
+  universitary = 'universitary',
+  estudent = 'estudent',
+  professor = 'professor',
+  visitor = 'visitor',
 }
 
-enum DocumetnType {
-  CedulaDeCiudadania,
-  TarjetDeIdentidad,
-  CedulaDeExtranjeria,
+export enum DocumetnType {
+  CedulaDeCiudadania = 'CedulaDeCiudadania',
+  TarjetDeIdentidad = 'TarjetDeIdentidad',
+  CedulaDeExtranjeria = 'CedulaDeExtranjeria',
 }
 
-enum BloodType {
-  A_POS = 'A+',
-  O_POS = 'O+',
-  B_POS = 'B+',
-  AB_POS = 'AB+',
-  A_NEG = 'A-',
-  O_NEG = 'O-',
-  B_NEG = 'B-',
-  AB_NEG = 'AB-',
+export enum BloodType {
+  A_POS = 'A_POS',
+  O_POS = 'O_POS',
+  B_POS = 'B_POS',
+  AB_POS = 'AB_POS',
+  A_NEG = 'A_NEG',
+  O_NEG = 'O_NEG',
+  B_NEG = 'B_NEG',
+  AB_NEG = 'AB_NEG',
 }
