@@ -1,4 +1,4 @@
 export const environment = {
   urlApi:
-    'https://gdr-container-testing.livelybay-5b00af3d.centralus.azurecontainerapps.io',
+    'https://gdr-container-testing.wonderfulforest-6ce2d1ba.centralus.azurecontainerapps.io',
 };
